@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Elenco delle lezioni
-toc: true
+toc: false
 ---
 
 
