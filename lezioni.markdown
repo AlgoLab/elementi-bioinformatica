@@ -5,7 +5,7 @@ toc: false
 ---
 
 
-=== Lezioni Frontali (16x2h ciascuna)
+### Lezioni Frontali (16x2h ciascuna)
 
 1. Pattern Matching. Agrep
 2. Karp-Rabin
@@ -22,21 +22,21 @@ toc: false
 13. Ordinamento per trasposizione. DCJ.
 14. Filogenesi (cosa?)
 15. Haplotyping (cosa?)
-1. ???
+16. ???
 
-=== Esercitazioni (8x2h ciascuna)
+### Esercitazioni (8x2h ciascuna)
 
 1. Introduzione alla valutazione delle prestazioni (tempo, memoria, qualità
 dei risultati). Aderenza dei risultati sperimentali al modello teorico:
 valutazione empirica (grafico) e statistica (test ipotesi).
 1. Generazione dati simulati.
 1. Richiami di programmazione dinamica
-2. Distanza di edit con banda.
-3. Carrillo-Lipman
-4. BLAST
+1. Distanza di edit con banda.
+1. Carrillo-Lipman
+1. BLAST
 
 
-=== Laboratori (8x3h ciascuna)
+### Laboratori (8x3h ciascuna)
 Studio di codice esistente?
 
 1. Introduzione a C++
