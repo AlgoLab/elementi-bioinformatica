@@ -1,0 +1,154 @@
+$Id: README,v 1.3 2006/09/01 04:55:39 sheneman Exp $
+
+******************************************************************************
+
+                       Clearcut :: Relaxed Neighbor Joining
+
+                             (Version 1.0.9, Feb. 2009)
+
+******************************************************************************
+
+INTRODUCTION:
+-------------
+
+Clearcut is the reference implementation for the Relaxed Neighbor Joining (RNJ)
+algorithm by J. Evans, L. Sheneman, and J. Foster from the Initiative
+for Bioinformatics and Evolutionary Studies (IBEST) at the University of 
+Idaho.
+
+Details of RNJ are published here:
+
+  Evans, J., L. Sheneman, and J.A. Foster (2006) Relaxed Neighbor-Joining: 
+  A Fast Distance-Based Phylogenetic Tree Construction Method, 
+  J. Mol. Evol., 62, 785-792
+
+Relaxed Neighbor-Joining (RNJ) is a fast approximation to the 
+Neighbor Joining algorithm originally described in:
+
+  Saitou, N. and M. Nei (1987), The Neighbor-Joining method: A new method
+  for reconstructing phylogenetic trees., Mol. Biol. Evol.  4:406-425
+
+and revised in:
+
+  Studier, J. and K. Keppler (1988), A note on the neighbor-joining
+  algorithm of Saitou and Nei., Mol. Biol. Evol.  5:729-731
+
+
+Whereas traditional Neighbor-Joining has a cubic time complexity with
+respect to the number of input sequences,  Relaxed Neighbor-Joining has 
+a drastically reduced, sub-cubic time complexity for the average case.  
+In addition to being significantly (and asymptotically) 
+more efficient, Relaxed Neighbor-Joining shares some nice theoretical
+properties with Traditional Neighbor-Joining.  In particular, if distances
+are truly additive (self-consistent), RNJ will reconstruct the true tree
+that is consistent with those additive distances.  
+
+For non-additive distances, RNJ will sample the space of similar trees 
+more thoroughly than traditional NJ by greedily joining nodes which
+represent a locally (as opposed to globally) minimum distance between 
+nodes. This results in sampling more trees than it is possible to explore 
+through NJ alone.  Additionally, it has been empirically shown that 
+for non-additive distances, RNJ is capable of reconstructing trees which 
+are nearly qualitatively indistinct from trees built via the conventional 
+Neighbor-Joining algorithm.
+
+******************************************************************************
+
+
+INSTALLING CLEARCUT:
+--------------------
+
+Clearcut was developed and tested primarily under Redhat Linux 7.2 and 
+Redhat Enterprise Linux 3 on the Pentium 3 and Pentium 4 architectures.
+However, Clearcut should compile and run easily on other UNIX and
+UNIX-like operating systems.  For example, clearcut builds cleanly on 
+the Sun Solaris 9 and Apple OS X platforms.
+
+Good compiler optimization can result in an approximate 2X overall speedup 
+for Clearcut.  Compiler optimizations for GCC under Linux on the 
+Pentium 4 architecture have been thoroughly explored.  The Makefile
+included in this distribution has several possible sets of compiler 
+flags available.  Uncomment the appropriate set of compiler flags
+for your particular architecture and compiler combination.  The
+default CFLAGS is set to basic level 3 optimization with gcc, but significant
+additional compiler optimizations are most likely available/desirable.
+
+
+To build Clearcut:
+
+  + Unzip and extract the distribution.
+  + Edit "Makefile" and select the appropriate optimization flags
+  + Type "make" to compile and link clearcut
+  + Type "make install" to install clearcut on your system
+
+
+******************************************************************************
+
+
+RUNNING CLEARCUT:
+-----------------
+	
+Clearcut has a variety of possible command-line arguments.  To see the 
+available arguments, type:  
+
+ $> clearcut --help
+
+Clearcut is capable of reading either a pre-computed distance matrix in
+approximate PHYLIP format, or it can input an alignment in FASTA format.
+In addition to fully symmetric distance matrices, clearcut can parse 
+upper and lower diagonal half-matrices.
+
+Clearcut can build a distance matrix from a Multiple Sequence Alignment (MSA)
+of either DNA or Protein sequences.  When building a distance matrix, 
+percent pairwise differences can be corrected for multiple hits using either
+the Jukes-Cantor or Kimura correction methods as described in:
+
+    Kimura, M. (1980), A simple method for estimating evolutionary
+    rates of base substitutions through comparative studies of
+    nucleotide sequences.  J. Mol. Evol., 16, 111-120
+
+    Kimura, M. (1983), The Neutral Theory of Molecular Evolution.
+    p. 75., Cambridge University Press, Cambridge, England
+
+    Jukes, T.H. (1969), Evolution of protein molecules.  In H.N. Munro (Ed.),
+    Mammalian Protein Metabolism, Volume III, Chapter 24, pp. 21-132. 
+    New York: Academic Press
+	
+
+By default, Clearcut will perform joins in a random fashion in order to 
+minimize systematic algorithmic bias.  This option can be disabled using
+the --norandom runtime option.
+
+By default, Clearcut uses Relaxed Neighbor-Joining, although Traditional
+Neighbor-Joining can be invoked with the --neighbor runtime option.
+	
+
+******************************************************************************
+
+
+AUTHOR/MAINTAINER:
+------------------
+
+
+Clearcut is maintained by:  Luke Sheneman
+                            sheneman@hungry.com
+                            http://bioinformatics.hungry.com
+
+
+Please contact the maintainer with questions, bug reports, and feedback!!
+
+
+
+******************************************************************************
+
+LICENSE:
+--------
+
+Clearcut is distributed under the BSD license, which is described in 
+the LICENSE file that is bundled with this program.
+
+******************************************************************************
+
+
+
+

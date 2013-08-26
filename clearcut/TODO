@@ -1,0 +1,36 @@
+
+                       TODO for Clearcut
+
+                    Version 1.0.4 -- Nov 2004
+
+                         Luke Sheneman
+                     sheneman@cs.uidaho.edu
+                           11/15/04
+
+----------------------------------------------------------------------
+
+SHORT TERM:
+-----------
+
+1) Add flag to allow matrix output in different formats (upper/lower)
+
+2) Add bootstrapping functionality
+
+3) Retroactively comment code further (in progress)
+
+4) Fix problem where 2nd taxon in dmat can't start with +,-,.
+
+5) Add regression test suite
+
+
+
+LONG TERM:
+----------
+
+1) Combine distance matrix and multiple alignment parser into a
+   single state machine.  This would allow clearcut to autodetect
+   the type of input and the user would not have to specify.
+
+----------------------------------------------------------------------
+
+** See LICENSE file for licensing details for Clearcut.
