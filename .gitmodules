@@ -1,0 +1,9 @@
+[submodule "velvet"]
+	path = velvet
+	url = https://github.com/dzerbino/velvet.git
+[submodule "bwa"]
+	path = bwa
+	url = https://github.com/lh3/bwa.git
+[submodule "samtools"]
+	path = samtools
+	url = https://github.com/samtools/samtools.git
