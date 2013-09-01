@@ -1,0 +1,146 @@
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{pgf}
+\usepackage{verbatim}
+
+% \usepackage{euler}
+\usepackage[T1]{fontenc}
+
+\immediate\write18{sh ./vc}
+\input{vc}
+
+\author{Gianluca Della Vedova}
+\title{Elementi di Bioinformatica}
+\institute{Univ. Milano--Bicocca\\
+  \texttt{http://gianluca.dellavedova.org}}
+\date{\today, {\tiny revisione \VCRevision}}
+\pgfdeclareimage[height=1cm]{university-logo}{logounimib}
+\logo{\pgfuseimage{university-logo}}
+
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command:
+% \beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\begin{frame}\frametitle{Gianluca Della Vedova}
+  \begin{itemize}
+  \item
+    Elementi di Bioinformatica
+  \item
+    Ufficio U14-2041
+  \item
+    \textsf{\small http://gianluca.dellavedova.org}
+  \item
+      \textsf{\small
+      http://algolab.eu/didattica/elementi-di-bioinformatica/}
+  \item
+    \textsf{\small gianluca.dellavedova@unimib.it}
+  \end{itemize}
+\end{frame}
+
+ \begin{frame}
+   \frametitle{Consensus Clustering}
+   \begin{block}{Problem}
+     \alert{Input}: set $\Pi$ of partitions of $U$\\
+     \alert{Output}: a partition $P$ of $U$\\
+     \alert{Goal}: $P$ the best possible representative of $\Pi$
+   \end{block}
+
+   \begin{block}{Objective Function}
+     \begin{itemize}
+     \item
+       Symmetric difference between two partitions =
+       Pairs of elements clustered differently
+     \item
+       $d(P,\Pi)=\sum_{\pi\in \Pi}d(\pi,P)$
+     \end{itemize}
+   \end{block}
+ \end{frame}
+
+
+
+\begin{frame}\frametitle{Finestre}
+  \begin{itemize}
+  \item
+    Editor (F5)
+  \item
+    Log (F6)
+  \item
+    Output (F7)
+  \item
+    Icona Esegui (F8)
+  \end{itemize}
+\end{frame}
+
+
+%\begin{frame}[fragile]\frametitle{Data Step: da dati grezzi 2}
+    %  \VerbatimInput{code/p3.sas}
+    % Dati separati da spazi
+%\end{frame}
+
+\begin{frame}[fragile]\frametitle{Formati Alfanumerici}
+  \verb!: $20.!
+
+  Rappresenta il numero massimo di caratteri di un campo (in questo caso
+  20). Il dato termina con il primo spazio.
+
+  \verb!$20.!
+
+  Esattamente 20 caratteri.
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Formati Numerici}
+  \verb!10.3!
+
+  Numero totale di caratteri/cifre
+
+  .
+
+  Numero di cifre decimali
+\end{frame}
+
+
+\begin{frame}[containsverbatim]\frametitle{Licenza d'uso}
+  \small
+
+  Quest'opera {\`e} soggetta alla licenza Creative Commons: Attribuzione-Condividi
+  allo stesso modo 3.0.
+
+  \verb+http://creativecommons.org/licenses/by-sa/3.0/+
+
+  Sei libero di riprodurre, distribuire, comunicare al pubblico, esporre in
+  pubblico, rappresentare, eseguire, recitare e modificare quest'opera
+  alle seguenti condizioni:
+  \begin{itemize}
+  \item
+    Attribuzione — Devi attribuire la paternit{\`a} dell'opera nei modi indicati
+    dall'autore o da chi ti ha dato l'opera in licenza e in modo tale da non
+    suggerire che essi avallino te o il modo in cui tu usi l'opera.
+  \item
+    Condividi allo stesso modo — Se alteri o trasformi quest'opera, o se la usi
+    per crearne un'altra, puoi distribuire l'opera risultante solo con una licenza
+    identica o equivalente a  questa.
+  \end{itemize}
+  \vspace*{1cm}
+\end{frame}
+
+\end{document}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-PDF-mode: t
+%%% TeX-master: "lucidi_bioinformatica_video"
+%%% buffer-file-coding-system: utf-8
+%%% End:

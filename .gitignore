@@ -1,1 +1,12 @@
 _site/
+/lezioni/lucidi_*.log
+/lezioni/lucidi_*.aux
+/lezioni/lucidi_*.nav
+*.old
+/lezioni/lucidi_*.out
+/lezioni/lucidi_*.pdf
+/lezioni/lucidi_*.vrb
+/lezioni/lucidi_*.snm
+/lezioni/lucidi_*.toc
+/lezioni/vc.tex
+/lezioni/auto/*
