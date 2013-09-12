@@ -189,7 +189,8 @@ main(int argc, const char *argv[]) {
 
   /* Check the suffix array. */
   if(sufcheck(T, SA, (int)n, 1) != 0) { exit(EXIT_FAILURE); }
-
+  for (unsigned int i=0; i< n; i++) 
+      printf("SA[%4d]=%4d\n", i, SA[i]);
   /* Deallocate memory. */
   free(SA);
   free(T);

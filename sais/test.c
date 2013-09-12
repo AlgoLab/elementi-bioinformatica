@@ -73,16 +73,8 @@ main(int argc, const char *argv[]) {
         fprintf(stderr, "  n=%2d, bits=%u : failure - sais\n", n, bits);
         exit(EXIT_FAILURE);
       }
-      if((p1 = sais_bwt(T1, T1BWT, A, n)) < 0) {
-        fprintf(stderr, "  n=%2d, bits=%u : failure - sais_bwt\n", n, bits);
-        exit(EXIT_FAILURE);
-      }
       if(sais_int(T3, SA3, n, 512) != 0) {
         fprintf(stderr, "  n=%2d, bits=%u : failure - sais_int\n", n, bits);
-        exit(EXIT_FAILURE);
-      }
-      if((p3 = sais_int_bwt(T3, T3BWT, A, n, 512)) < 0) {
-        fprintf(stderr, "  n=%2d, bits=%u : failure - sais_int_bwt\n", n, bits);
         exit(EXIT_FAILURE);
       }
 

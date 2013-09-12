@@ -33,20 +33,23 @@ extern "C" {
 
 /* find the suffix array SA of T[0..n-1]
    use a working space (excluding T and SA) of at most 2n+O(lg n) */
-int
-sais(const unsigned char *T, int *SA, int n);
+    int
+    sais(const unsigned char *T, int *SA, int n);
 
+/*** start: sais.h */
 /* find the suffix array SA of T[0..n-1] in {0..k-1}^n
    use a working space (excluding T and SA) of at most MAX(4k,2n) */
-int
-sais_int(const int *T, int *SA, int n, int k);
+    int
+    sais_int(const int *T, int *SA, int n, int k);
+/*** end: sais.h */
+
 
 /* burrows-wheeler transform */
-int
-sais_bwt(const unsigned char *T, unsigned char *U, int *A, int n);
-int
-sais_int_bwt(const int *T, int *U, int *A, int n, int k);
+    int
+    sais_int_bwt(const int *T, int *U, int *A, int n, int k);
 
+    int
+    sais_bwt(const unsigned char *T, unsigned char *U, int *A, int n);
 
 #ifdef __cplusplus
 } /* extern "C" */

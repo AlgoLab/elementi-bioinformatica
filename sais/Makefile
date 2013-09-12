@@ -4,7 +4,7 @@
 CC						= gcc
 #CXX						= g++
 #OUTPUT_OPTION	= -o $@
-CFLAGS				= -O3 -fomit-frame-pointer
+CFLAGS				= -O3 -fomit-frame-pointer -std=c11
 #CXXFLAGS			= -O3 -fomit-frame-pointer
 CPPFLAGS			= -Wall -DNDEBUG
 LDFLAGS				= 
