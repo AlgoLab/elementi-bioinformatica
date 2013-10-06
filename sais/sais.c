@@ -44,7 +44,7 @@
 /*** end: sais.c */
 #define chr(_a) (cs == sizeof(int) ? ((int *)T)[(_a)] : ((unsigned char *)T)[(_a)])
 
-/* find the start or end of each bucket */
+/*** start: sais.C-alphabet.c */
 static
 void
 getCounts(const void *T, int *C, int n, int k, int cs) {
@@ -53,14 +53,24 @@ getCounts(const void *T, int *C, int n, int k, int cs) {
     for(i = 0; i < n; ++i) { ++C[chr(i)]; }
     /* C: number of occurrences of each symbol */
 }
+/*** end: sais.C-alphabet.c */
+/*** start: sais.start-end-bucket.c */
+/* find the start or end of each bucket */
 static
 void
 getBuckets(const int *C, int *B, int k, int end) {
     int i, sum = 0;
-    if(end) { for(i = 0; i < k; ++i) { sum += C[i]; B[i] = sum; } }
-    else { for(i = 0; i < k; ++i) { sum += C[i]; B[i] = sum - C[i]; } }
+    // end: boolean
+    if(end) {
+        for(i = 0; i < k; ++i)
+            sum += C[i]; B[i] = sum;
+    } else {
+        for(i = 0; i < k; ++i)
+            sum += C[i]; B[i] = sum - C[i];
+    }
     /* B: number of elements in each bucket, in end==0 */
 }
+/*** end: sais.start-end-bucket.c */
 
 /* sort all type LMS suffixes */
 static
@@ -305,16 +315,22 @@ sais_main(const void *T, int *SA,
     assert((0 <= fs) && (0 < n) && (1 <= k));
 /*** end: sais_main.1 */
 
+/*** start: sais_main.2 */
     if(k <= MINBUCKETSIZE) {
         if((C = SAIS_MYMALLOC(k, int)) == NULL) { return -2; }
-        if(k <= fs) {
+        if(k <= fs) { // fs: free space
             B = SA + (n + fs - k);
-            flags = 1;
+            flags = 1; // int = bitfield
         } else {
-            if((B = SAIS_MYMALLOC(k, int)) == NULL) { SAIS_MYFREE(C, k, int); return -2; }
+            if((B = SAIS_MYMALLOC(k, int)) == NULL) {
+                SAIS_MYFREE(C, k, int); return -2;
+            }
             flags = 3;
         }
-    } else if(k <= fs) {
+    }
+/*** end: sais_main.2 */
+/*** start: sais_main.2.1 */
+    else if(k <= fs) {
         C = SA + (n + fs - k);
         if(k <= (fs - k)) {
             B = C - k;
@@ -323,10 +339,14 @@ sais_main(const void *T, int *SA,
             if((B = SAIS_MYMALLOC(k, int)) == NULL) { return -2; }
             flags = 2;
         } else {
-            B = C;
-            flags = 8;
+            B = C; flags = 8;
         }
-    } else {
+    }
+/*** end: sais_main.2.1 */
+
+/*** start: sais_main.3 */
+/* k > MINBUCKETSIZE && k > fs */
+    else {
         if((C = B = SAIS_MYMALLOC(k, int)) == NULL) { return -2; }
         flags = 4 | 8;
     }
@@ -334,7 +354,8 @@ sais_main(const void *T, int *SA,
         if(flags & 1) { flags |= ((k * 2) <= (fs - k)) ? 32 : 16; }
         else if((flags == 0) && ((k * 2) <= (fs - k * 2))) { flags |= 32; }
     }
-
+/*** end: sais_main.3 */
+/*** start: sais_main.stage1 */
     /* stage 1: reduce the problem by at least 1/2
        sort all the LMS-substrings */
     getCounts(T, C, n, k, cs); getBuckets(C, B, k, 1); /* find ends of buckets */
@@ -348,6 +369,7 @@ sais_main(const void *T, int *SA,
             do { c1 = c0; } while((0 <= --i) && ((c0 = chr(i)) >= c1));
         }
     }
+/*** end: sais_main.stage1 */
 
     if(1 < m) {
         if(flags & (16 | 32)) {
@@ -460,8 +482,15 @@ sais(const unsigned char *T, int *SA, int n) {
 /*** start: sais_int.c */
 int
 sais_int(const int *T, int *SA, int n, int k) {
-    if((T == NULL) || (SA == NULL) || (n < 0) || (k <= 0)) { return -1; }
-    if(n <= 1) { if(n == 1) { SA[0] = 0; } return 0; }
+    if((T == NULL) || (SA == NULL) || (n < 0) || (k <= 0)) {
+        return -1;
+    }
+    if(n <= 1) {
+        if(n == 1) {
+            SA[0] = 0;
+        }
+        return 0;
+    }
     return sais_main(T, SA, 0, n, k, sizeof(int), 0);
 }
 /*** end: sais_int.c */
