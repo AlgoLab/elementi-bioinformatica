@@ -1,8 +1,11 @@
 \documentclass[14pt]{beamer}
 \usepackage{fancyvrb}
 \RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}{frame=single,
+fontsize=\scriptsize  , %fontfamily=helvetica,
   numbersep=1mm, numbers=left, formatcom=\color{orange}}
 \usepackage[bitstream-charter]{mathdesign}
+\usepackage{listings}
+\lstset{ commentstyle=\color{orange}, keywordstyle=\color{yellow} }
 
 
 \usetheme[⟨options⟩]{Boadilla}
@@ -10,8 +13,8 @@
 \usecolortheme{albatross}
 %\setbeamercolor*{normal text}{fg=white!65!black,bg=blue!80!black}
 
-\usepackage{wallpaper}
-\CenterWallPaper{0.8}{logounimib}
+%\usepackage{wallpaper}
+%\CenterWallPaper{0.8}{logounimib}
 
 
 \setbeamertemplate{blocks}[rounded][shadow=false]
@@ -38,6 +41,9 @@
 \setbeamercolor*{separation line}{}
 \setbeamercolor*{fine separation line}{}
 \setbeamercolor{alerted text}{fg=yellow}
+
+\beamerdefaultoverlayspecification{<+->}
+
 
 
 
