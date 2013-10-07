@@ -531,7 +531,72 @@ Non confrontare con i primi $Lcp(SA[L], SA[R])$ caratteri
 \end{columns}
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Acceleranti 2}
+\begin{columns}[T]
+\begin{column}[T]{0.6\textwidth}
+\begin{block}{$l$: $lcp(L,P)$; $r$: $Lcp(R,P)$}
+\begin{enumerate}
+\item
+Caso 1: $l>r$
+\only<3->{\begin{itemize}\item
+$Lcp(L,M)>l$\only<4->{$\Rightarrow M\gets L$}
+\only<5->{\item
+$Lcp(L,M)<l$\only<6->{$\Rightarrow$\\ $R\gets M, r\gets Lcp(M,P)$}}
+\only<7->{\item
+  $Lcp(L,M)=l$\only<8->{$\Rightarrow$ confronto $P[l+1:]$, $M[l+1:]$}
+}\end{itemize}}
+\only<9->{\item
+  Caso 2: $l=r$
+\only<10->{\begin{itemize}\item
+  $Lcp(L,M)>l$
+\only<11->{\item $Lcp(M,R)>l$}
+\only<12->{\item $Lcp(L,M)=Lcp(M,R)=l$}
+  \end{itemize}}}
+\end{enumerate}
+\end{block}
+\end{column}
+\begin{column}{0.38\textwidth}
+\only<2->{\multiinclude[<+>][start=1,format=pdf,graphics={width=0.95\textwidth}]{figures/SA-accelerant}}
+%\only<2->{\multiinclude[<alert@+| +->][start=1,format=pdf,graphics={width=0.95\textwidth}]{figures/SA-accelerant}}
+\end{column}
+\end{columns}
+\end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Acceleranti 2: calcolo $Lcp$ in tempo $O(n)$}
+\begin{itemize}[<+->]
+\item
+Iterazione 1: $(L,R)=(1,n)$
+\item
+Iterazione 2: $(L,R)=(1,n/2)$ oppure $(n/2,n)$
+\item
+Iterazione $k$: $L = h\frac{n}{2^{k-1}}$, $R = (h+1)\frac{n}{2^{k-1}}$
+\item
+Iterazione $\lceil \log_{2}n\rceil$: $R=L+1$, $Lcp(h,h+1)$
+\item
+Iterazione $\lceil \log_{2}n\rceil -1$: aggrego i risultati dell'iterazione
+$\lceil \log_{2}n\rceil$
+\item
+Iterazione $k$: $Lcp(h\frac{n}{2^{k-1}}, (h+1)\frac{n}{2^{k-1}})$
+\item
+$=\min\{Lcp(2h\frac{n}{2^{k}}, (2h+1)\frac{n}{2^{k}})$,
+$Lcp((2h+1)\frac{n}{2^{k}}+1, (2h+2)\frac{n}{2^{k}})$,
+$Lcp((2h+1)\frac{n}{2^{k}}), Lcp((2h+1)\frac{n}{2^{k}}+1)\}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Acceleranti 2: Osservazione}
+\begin{itemize}
+\item
+Tempo per trovare un'occorrenza
+\item
+Tempo per trovare tutte le occorrenze?
+\item
+$O(n+m+k)$, per $k$ occorrenze
+\end{itemize}
+\end{frame}
 
 
 \begin{frame}[fragile]
@@ -705,7 +770,7 @@ Aggiorna $C_{z}$
 
 
 
-
+\begin{comment}
 \begin{frame}[fragile]
 \frametitle{SAIS}
 \lstinputlisting{code/sais/sais.c}
@@ -716,7 +781,7 @@ Aggiorna $C_{z}$
 \frametitle{SAIS}
 \lstinputlisting{code/sais/sais_main.1}
 \end{frame}
-
+\end{comment}
 
 
 %  \begin{frame}
