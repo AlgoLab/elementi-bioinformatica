@@ -10,3 +10,4 @@ _site/
 /lezioni/lucidi_*.toc
 /lezioni/vc.tex
 /lezioni/auto/*
+/libdivsufsort
