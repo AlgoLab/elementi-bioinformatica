@@ -29,7 +29,7 @@ code: code/sais/sais.c code/sais/sais.h
 #and/or text from the Open Data Structures Project and/or linking to
 #opendatastructures.org.
 
-sources=$(wildcard *.ipe)
+sources=$(wildcard figures/*.ipe)
 pdfs=$(sources:.ipe=.pdf)
 burstpdfs=$(sources:.ipe=-1.pdf)
 svgfigs=$(wildcard figures/*.svg)
