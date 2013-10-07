@@ -586,9 +586,16 @@ $Lcp((2h+1)\frac{n}{2^{k}}), Lcp((2h+1)\frac{n}{2^{k}}+1)\}$
 \end{itemize}
 \end{frame}
 
+
 \begin{frame}[fragile]
+\frametitle{Acceleranti 2: calcolo $Lcp$ in tempo $O(n)$}
+\multiinclude[<+>][start=1,format=pdf,graphics={width=0.95\textwidth}]{figures/SA-linear-Lcp}
+\uncover<5->{Passaggio da $y$ a $z$ deve esistere}
+\end{frame}
+
+\begin{frame}
 \frametitle{Acceleranti 2: Osservazione}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item
 Tempo per trovare un'occorrenza
 \item
@@ -597,7 +604,6 @@ Tempo per trovare tutte le occorrenze?
 $O(n+m+k)$, per $k$ occorrenze
 \end{itemize}
 \end{frame}
-
 
 \begin{frame}[fragile]
 \frametitle{Costruzione di suffix array}
