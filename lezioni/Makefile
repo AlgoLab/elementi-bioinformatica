@@ -38,10 +38,10 @@ svgfigspdf=$(svgfigs:.xvg=.pdf)
 figs: $(pdfs) $(burstpdfs) $(externalfigs) $(svgfigspdf)
 
 %-1.pdf : %.pdf
-	        pdftk $< burst output $(<:.pdf=-%d.pdf)
+		pdftk $< burst output $(<:.pdf=-%d.pdf)
 
 %.pdf : %.ipe
-	        ipetoipe -pdf $<
+		ipetoipe -pdf $<
 
 %.pdf : %.svg
 	inkscape $< --export-pdf=$@
@@ -49,5 +49,5 @@ figs: $(pdfs) $(burstpdfs) $(externalfigs) $(svgfigspdf)
 clean :
 	rm -f ./*.pdf ./figures/*.pdf && latexmk -c
 
-#sync:	vc.tex pdf
-#	rsync -avz *.pdf Elearning Esami dellavedova@aspic.bio.disco.unimib.it:public_html/didattica/lab_statistico-informatico/
+dist: pdf vc.tex
+	$(foreach f,$(TARGETS), ~/bin/dropbox_uploader.sh upload $(f) /Didattica/Elementi-Bioinformatica/$(f);)
