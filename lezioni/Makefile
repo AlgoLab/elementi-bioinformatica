@@ -33,7 +33,7 @@ sources=$(wildcard figures/*.ipe)
 pdfs=$(sources:.ipe=.pdf)
 burstpdfs=$(sources:.ipe=-1.pdf)
 svgfigs=$(wildcard figures/*.svg)
-svgfigspdf=$(svgfigs:.xvg=.pdf)
+svgfigspdf=$(svgfigs:.svg=.pdf)
 
 figs: $(pdfs) $(burstpdfs) $(externalfigs) $(svgfigspdf)
 
