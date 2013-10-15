@@ -43,17 +43,173 @@ Slides: <a href="http://algolab.github.io/elementi-bioinformatica/lab/slides/">h
 Materiale: <a href="https://github.com/algolab/elementi-bioinformatica">https://github.com/algolab/elementi-bioinformatica</a><br /></p>
 <p>&nbsp;<br />
 A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></slide><slide >
-  <hgroup><h2>Elementi di Bioinformatica (Laboratorio)</h2></hgroup><article><p>Contenuti:</p>
-<ol>
-<li><a href="1-esercizi-Ruby.html">Esercizi Ruby - parte 1</a></li>
-<li>Esercizi Ruby - parte 2</li>
-<li>Controllo di versione con git e github</li>
-<li>Manipolazione formati file in Ruby (FASTA/GTF)</li>
-<li>Manipolazione formati file in Ruby (SAM/BAM)</li>
-<li>Esercizi su sequenziamento</li>
-<li>Pipeline completa: estrazione dati, gestione dati</li>
-<li>Pipeline completa: allineamento, produzione output</li>
-</ol></article></slide><slide class="backdrop"></slide>
+  <hgroup><h1>Ruby Basic Facts</h1></hgroup></slide><slide >
+  <hgroup><h2>Things to remember</h2></hgroup><article><ul>
+<li>
+<p><code>;</code> terminates a statement (but it is <em>optional</em> if it is at the end of the line)</p>
+</li>
+<li>
+<p>indentation has no meaning (but it is <em>very</em> useful!!)</p>
+</li>
+<li>
+<p><code>(</code> and <code>)</code> around the actual parameter list of a function/method invocation are (often) <em>optional</em> (required to disambiguate nested invocations)</p>
+</li>
+<li>
+<p>variables start to exist when they are written to</p>
+</li>
+<li>
+<p><em>all</em> the variables are <em>references</em> to objects (even integers, ...)</p>
+</li>
+<li>
+<p>objects are created with <code>ClassName.new(&lt;parameters)</code> (parentheses optional)</p>
+</li>
+<li>
+<p>function <code>puts</code> is used for printing a message</p>
+</li>
+</ul></article></slide><slide >
+  <hgroup><h2>Naming conventions</h2></hgroup><article><ul>
+<li><code>variable_name</code>, <code>method_name</code>, <code>parameter_name</code></li>
+<li><code>CONSTANTS</code></li>
+<li><code>ClassNames</code></li>
+<li><code>@instance_variable</code></li>
+<li><code>@@class_variable</code></li>
+</ul></article></slide><slide >
+  <hgroup><h2>Common basic types</h2></hgroup><article><ul>
+<li><em>Booleans:</em> <code>true</code>, <code>false</code><br />
+<strong>Remember:</strong> everything is <code>true</code> unless <code>false</code> or <code>nil</code></li>
+<li><em>Numbers</em> (literal are as usual: <code>1</code>, <code>-10</code>, <code>1.0</code>, <code>3.14</code>, ...)<ul>
+<li>Integers: classes <code>Fixnum</code>, <code>Bignum</code></li>
+<li>Floating-point: class <code>Float</code></li>
+</ul>
+</li>
+<li><em>Strings</em><ul>
+<li>Class: <code>String</code></li>
+<li>Literals: <code>'no interpolation'</code>, <code>"interpolation"</code></li>
+</ul>
+</li>
+</ul></article></slide><slide class="has_code">
+  <hgroup><h2>String interpolation</h2></hgroup><article><p>If a string is enclosed in <code>"..."</code>, then <em>string interpolation</em> is active!</p>
+<div class="highlight"><pre><span class="n">first_name</span> <span class="o">=</span> <span class="s2">&quot;George&quot;</span>
+<span class="nb">puts</span> <span class="s2">&quot;Good morning, </span><span class="si">#{</span><span class="n">first_name</span><span class="si">}</span><span class="s2">!&quot;</span>
+<span class="c1"># =&gt; Good morning, George!</span>
+</pre></div>
+
+<p><em>Powerful:</em> (almost) any Ruby expression can be put inside <code>#{...}</code></p>
+<div class="highlight"><pre><span class="nb">puts</span> <span class="s2">&quot;Good morning, </span><span class="si">#{</span><span class="n">first_name</span><span class="o">.</span><span class="n">upcase</span><span class="si">}</span><span class="s2">!&quot;</span>
+<span class="c1"># =&gt; Good morning, GEORGE!</span>
+<span class="nb">puts</span> <span class="s2">&quot;You are </span><span class="si">#{</span> <span class="s1">&#39;not &#39;</span> <span class="k">if</span> <span class="n">first_name</span> <span class="o">!=</span> <span class="s1">&#39;George&#39;</span> <span class="si">}</span><span class="s2">George.&quot;</span>
+<span class="nb">puts</span> <span class="s2">&quot;You are </span><span class="si">#{</span> <span class="s1">&#39;not &#39;</span> <span class="k">if</span> <span class="n">first_name</span> <span class="o">!=</span> <span class="s1">&#39;Alice&#39;</span> <span class="si">}</span><span class="s2">Alice.&quot;</span>
+<span class="c1"># =&gt; You are George.</span>
+<span class="c1"># =&gt; You are not Alice.</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Selection construct</h2></hgroup><article><p>Selection is almost as in the other programming languages...</p>
+<div class="highlight"><pre><span class="n">first_name</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span>
+<span class="k">if</span> <span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;Mary&quot;</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Welcome back Mary&quot;</span>
+<span class="k">elsif</span> <span class="n">first_name</span> <span class="o">==</span> <span class="s2">&quot;George&quot;</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Welcome back George&quot;</span>
+<span class="k">else</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Nice to meet you, </span><span class="si">#{</span><span class="n">first_name</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">end</span>
+<span class="c1"># =&gt; Nice to meet you, John</span>
+</pre></div>
+
+<p><em>Remember:</em> no braces, code ends with a <code>end</code></p></article></slide><slide >
+  <hgroup><h2>Collections</h2></hgroup><article><ul>
+<li><em>Vectors</em><ul>
+<li>They hold references (hence any kind of object)</li>
+<li>Class: <code>Array</code></li>
+<li>Literals: <code>[]   # Empty array</code><br />
+<code>[ 1, "hello", 5.0 ["a", "list", "of", "words"] ]</code></li>
+</ul>
+</li>
+<li><em>Dictionaries/Maps</em>:<ul>
+<li>They map <em>keys</em> to <em>values</em> (references)</li>
+<li>Class: <code>Hash</code></li>
+<li>Literals: <code>{}   # Empty hash</code><br />
+<code>{ "key" =&gt; "some value",  18 =&gt; ["a", "list"] }</code></li>
+</ul>
+</li>
+</ul></article></slide><slide class="has_code">
+  <hgroup><h2>Iteration</h2></hgroup><article><p><code>For</code>/<code>While</code> loops are infrequent (not <em>idiomatic</em>)</p>
+<p><strong>Iterators</strong> are far more common</p>
+<div class="highlight"><pre><span class="n">friends</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;Paul&#39;</span><span class="p">,</span> <span class="s1">&#39;Peter&#39;</span><span class="o">]</span>
+<span class="n">friends</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">friend</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Hi, </span><span class="si">#{</span><span class="n">friend</span><span class="si">}</span><span class="s2">!&quot;</span>
+<span class="k">end</span>
+<span class="c1"># =&gt; Hi, Paul!</span>
+<span class="c1"># =&gt; Hi, Peter!</span>
+<span class="n">partners</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Peter&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Anne&#39;</span><span class="p">,</span> <span class="s1">&#39;Paul&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Julia&#39;</span><span class="p">}</span>
+<span class="n">partners</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">friend</span><span class="p">,</span><span class="n">partner</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Hi </span><span class="si">#{</span><span class="n">friend</span><span class="si">}</span><span class="s2">! How is </span><span class="si">#{</span><span class="n">partner</span><span class="si">}</span><span class="s2">?&quot;</span>
+<span class="k">end</span>
+<span class="c1"># =&gt; Hi Peter! How is Anne?</span>
+<span class="c1"># =&gt; Hi Paul! How is Julia?</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Blocks</h2></hgroup><article><p>Code inside <code>do ... end</code> is a <em>block</em>. <code>{ ... }</code> can be used as well.<br />
+Variables inside <code>|...|</code> are local to the block.</p>
+<p><strong>Blocks</strong> are powerful!</p>
+<p>Example:</p>
+<div class="highlight"><pre><span class="c1"># Read and print the lines of file &#39;prova.txt&#39;</span>
+<span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;prova.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+    <span class="nb">puts</span> <span class="n">line</span>
+<span class="k">end</span>
+</pre></div>
+
+<p class="larger center"><em>That's all folks!</em><br /></p></article></slide><slide >
+  <hgroup><h1>Practical Information</h1></hgroup></slide><slide >
+  <hgroup><h2>Environment</h2></hgroup><article><p class="quitelarger">The lab classes will use <a href="https://www.nitrous.io/">Nitrous.IO</a> for editing and testing most exercises.<br /></p>
+<p>It offers a <em>web-based editor</em> and <em>terminal</em>.</p>
+<p>Please <a href="https://www.nitrous.io/join/pFMKvVjFPsQ">register</a> (for the free plan) and use it (otherwise you can install Ruby on your laptop).</p>
+<p>After that, create a <em>Ruby</em> box and you are done!</p></article></slide><slide >
+  <hgroup><h2>Ruby Gems</h2></hgroup><article><p class="larger"><em>Gems</em> are Ruby libraries.<br /></p>
+<p>Utility <code>gem</code> can be used to install/remove/upgrade/build/... gems at the command line.<br />
+Example:</p>
+<pre><code>gem install gemname      # Install gem gemname
+gem update               # Upgrade all the installed gems to the latest version
+gem list                 # Print installed gems
+gem uninstall gem_name   # Remove gem gemname
+gem list
+gem help                 # Print help
+</code></pre>
+<p>Some gems provide command-line programs, too.</p></article></slide><slide >
+  <hgroup><h2>"Enhanced" terminal</h2></hgroup><article><p>Gem <code>pry</code> provides an enhanced interactive Ruby shell, useful for practicing.</p>
+<p>Install it into Nitrous.IO:</p>
+<pre><code>gem install pry
+gem install pry-doc    # On-line documentation
+pry
+[1] pry(main)&gt;
+</code></pre>
+<p>Now you can enter any Ruby code and see the results (<code>quit</code> to exit).</p>
+<p>Type <code>TAB</code> for <em>auto-completion</em>!!</p></article></slide><slide >
+  <hgroup><h1>Exercises (part 1)</h1></hgroup></slide><slide >
+  <hgroup><h2>Example</h2></hgroup><article><p class="quitelarger"><strong>Problem 1a:</strong><br />
+Write a program that reads the lines of file <a href="../examples/ex-1.txt"><code>ex-1.txt</code></a> and prints one of the longest ones.<br /></p>
+<p><em>Hint:</em> methods <code>strip!</code> and <code>length</code> of class <code>String</code> could be useful.</p>
+<p>File: <a href="../examples/ex-1a-one-longest.rb"><code>lab/examples/ex-1a-one-longest.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p class="quitelarger"><strong>Problem 1b:</strong><br />
+Write a program that reads the lines of file <a href="../examples/ex-1.txt"><code>ex-1.txt</code></a> and prints <em>all</em> the longest ones.<br /></p>
+<p><em>Hint:</em> method <code>&lt;&lt;</code> can be used to push an element in an <code>Array</code>, while <code>empty?</code> tests if the <code>Array</code> is empty.</p>
+<p>File: <a href="../examples/ex-1b-all-longest.rb"><code>lab/examples/ex-1b-all-longest.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Example</h2></hgroup><article><p class="quitelarger"><strong>Problem 1c:</strong><br />
+Write a program that reads the lines of file <a href="../examples/ex-1.txt"><code>ex-1.txt</code></a> and prints all the lines after removing the letter <code>'a'</code>.<br /></p>
+<p><em>Hint:</em> method <code>gsub</code> substitutes a substring with another string.</p>
+<p>File: <a href="../examples/ex-1c-without-a.rb"><code>lab/examples/ex-1c-without-a.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Example</h2></hgroup><article><p class="quitelarger"><strong>Problem 1d:</strong><br />
+Write a program that reads the lines of file <a href="../examples/ex-1.txt"><code>ex-1.txt</code></a> and prints one of the lines with the maximum number of words.<br /></p>
+<p><em>Hint:</em> method <code>split</code> splits a string according to a delimiter.</p>
+<p>File: <a href="../examples/ex-1d-with-max-words.rb"><code>lab/examples/ex-1d-with-max-words.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p class="quitelarger"><strong>Problem 1e:</strong><br />
+Write a program that reads the lines of file <a href="../examples/ex-1.txt"><code>ex-1.txt</code></a> and prints one of the longest words.<br /></p>
+<p><em>Hint:</em> method <code>split</code> splits a string according to a delimiter.</p>
+<p>File: <a href="../examples/ex-1e-one-longest-word.rb"><code>lab/examples/ex-1e-one-longest-word.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p class="quitelarger"><strong>Problem 1f:</strong><br />
+Write a program that reads the lines of file <a href="../examples/ex-1.txt"><code>ex-1.txt</code></a> and<br />
+prints one of the <em>most frequent words</em>.<br /></p>
+<p><em>Hint:</em> use a <code>Hash</code> to store word frequencies.</p>
+<p>File: <a href="../examples/ex-1f-frequent-word.rb"><code>lab/examples/ex-1f-frequent-word.rb</code></a></p></article></slide><slide class="backdrop"></slide>
 </slides>
 
 <!--[if IE]>
