@@ -43,17 +43,168 @@ Slides: <a href="http://algolab.github.io/elementi-bioinformatica/lab/slides/">h
 Materiale: <a href="https://github.com/algolab/elementi-bioinformatica">https://github.com/algolab/elementi-bioinformatica</a><br /></p>
 <p>&nbsp;<br />
 A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></slide><slide >
-  <hgroup><h2>Elementi di Bioinformatica (Laboratorio)</h2></hgroup><article><p><strong>Contenuti:</strong></p>
-<ol>
-<li><a href="1-esercizi-Ruby.html">Esercizi Ruby - parte 1</a></li>
-<li><a href="2-esercizi-Ruby.html">Esercizi Ruby - parte 2</a></li>
-<li>Controllo di versione con git e github</li>
-<li>Manipolazione formati file in Ruby (FASTA/GTF)</li>
-<li>Manipolazione formati file in Ruby (SAM/BAM)</li>
-<li>Esercizi su sequenziamento</li>
-<li>Pipeline completa: estrazione dati, gestione dati</li>
-<li>Pipeline completa: allineamento, produzione output</li>
-</ol></article></slide><slide class="backdrop"></slide>
+  <hgroup><h1>Ruby Basic Facts (part 2)</h1></hgroup></slide><slide class="has_code">
+  <hgroup><h2>Defining functions</h2></hgroup><article><div class="highlight"><pre><span class="k">def</span> <span class="nf">defname</span> <span class="o">&lt;</span> <span class="p">(</span> <span class="o">&lt;</span><span class="p">,</span> <span class="n">arg</span> <span class="o">&lt;=</span><span class="n">val</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="err">∗</span> <span class="o">&lt;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blockarg</span><span class="o">&gt;</span> <span class="p">)</span> <span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="k">end</span>
+</pre></div>
+
+<ul>
+<li><code>defname</code> is the name of the function (lowercase initial, may end with <code>!</code>, <code>?</code>, <code>=</code>)</li>
+<li><code>arg</code> is the name of each argument and <code>val</code> its optional default value</li>
+<li><code>&amp;block</code> as last argument (<code>&amp;</code> included) is the <em>block</em> passed to the function</li>
+<li>the <em>return value</em> is the result of the last executed statement</li>
+</ul></article></slide><slide class="has_code">
+  <hgroup><h2>Defining functions</h2></hgroup><article><div class="highlight"><pre><span class="k">def</span> <span class="nf">count_letters</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">letters</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="kp">false</span><span class="p">)</span>
+  <span class="n">freqs</span><span class="o">=[]</span>
+  <span class="k">if</span> <span class="n">ignore_case</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="n">downcase</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="n">letters</span><span class="o">.</span><span class="n">downcase</span>
+  <span class="k">end</span>
+  <span class="n">letters</span><span class="o">.</span><span class="n">each_char</span> <span class="p">{</span> <span class="o">|</span><span class="n">letter</span><span class="o">|</span> <span class="n">freqs</span> <span class="o">&lt;&lt;</span> <span class="n">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">freqs</span>
+<span class="k">end</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;BananA&quot;</span>
+<span class="n">l</span> <span class="o">=</span> <span class="s2">&quot;aNz&quot;</span>
+<span class="n">count_letters</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<span class="c1"># =&gt; [2, 0, 0]</span>
+<span class="n">count_letters</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="kp">false</span><span class="p">)</span>
+<span class="c1"># =&gt; [2, 0, 0]</span>
+<span class="n">count_letters</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+<span class="c1"># =&gt; [3, 2, 0]</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Passing parameters</h2></hgroup><article><p><em>Why is this wrong?</em></p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">count_letters</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">letters</span><span class="p">,</span> <span class="n">ignore_case</span><span class="o">=</span><span class="kp">false</span><span class="p">)</span>
+  <span class="n">freqs</span><span class="o">=[]</span>
+  <span class="k">if</span> <span class="n">ignore_case</span>
+    <span class="n">str</span><span class="o">.</span><span class="n">downcase!</span>
+    <span class="n">letters</span><span class="o">.</span><span class="n">downcase!</span>
+  <span class="k">end</span>
+  <span class="n">letters</span><span class="o">.</span><span class="n">each_char</span> <span class="p">{</span> <span class="o">|</span><span class="n">letter</span><span class="o">|</span> <span class="n">freqs</span> <span class="o">&lt;&lt;</span> <span class="n">str</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">freqs</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>Arguments are passed <em>by value</em>, but they are references!</p></article></slide><slide class="has_code">
+  <hgroup><h2>Defining classes</h2></hgroup><article><div class="highlight"><pre><span class="k">class</span> <span class="nc">DNASequence</span> <span class="o">&lt;</span> <span class="no">Object</span>
+<span class="kp">public</span>   <span class="c1"># default is public. private and protected are also available</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>  <span class="c1"># C&#39;tor</span>
+      <span class="vi">@identifier</span> <span class="o">=</span> <span class="n">identifier</span>
+      <span class="vi">@seq</span> <span class="o">=</span> <span class="kp">nil</span>
+  <span class="k">end</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:identifier</span>     <span class="c1"># identifier is read-only</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:seq</span>          <span class="c1"># sequence is read-write</span>
+
+  <span class="k">def</span> <span class="nf">to_fasta</span>
+    <span class="s2">&quot;&gt;</span><span class="si">#{</span><span class="vi">@identifier</span><span class="si">}</span><span class="se">\n</span><span class="si">#{</span><span class="vi">@seq</span><span class="si">}</span><span class="s2">&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Defining classes</h2></hgroup><article><div class="highlight"><pre><span class="k">class</span> <span class="nc">DNASequence</span> <span class="o">&lt;</span> <span class="no">Object</span>
+
+  <span class="c1"># ... as before ...</span>
+
+  <span class="kp">attr_reader</span> <span class="ss">:identifier</span>
+
+  <span class="k">def</span> <span class="nf">seq</span><span class="o">=</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>               <span class="c1"># &#39;seq&#39; can be used as lvalue now</span>
+    <span class="k">if</span> <span class="n">seq</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;ACGTacgt&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">seq</span><span class="o">.</span><span class="n">length</span>
+      <span class="nb">puts</span> <span class="s2">&quot;A DNA sequence can contain only ACGT!&quot;</span>
+    <span class="k">else</span>
+      <span class="vi">@seq</span> <span class="o">=</span> <span class="n">seq</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Defining classes</h2></hgroup><article><p>We can add methods to existing classes:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">DNASequence</span> <span class="o">&lt;</span> <span class="no">Object</span>
+  <span class="k">def</span> <span class="nf">reverse_and_complement!</span>
+    <span class="vi">@seq</span><span class="o">.</span><span class="n">reverse!</span>
+    <span class="vi">@seq</span><span class="o">.</span><span class="n">tr!</span> <span class="s2">&quot;ACGTacgt&quot;</span><span class="p">,</span> <span class="s2">&quot;TGCAtgca&quot;</span>
+    <span class="nb">self</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>..even to "system" classes:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">File</span>
+  <span class="k">def</span> <span class="nf">count_non_empty_lines</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">count</span> <span class="p">{</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="o">.</span><span class="n">length</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Defining iterators</h2></hgroup><article><div class="highlight"><pre><span class="k">class</span> <span class="nc">File</span>
+  <span class="k">def</span> <span class="nf">each_word</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+      <span class="n">line</span><span class="o">.</span><span class="n">strip!</span>
+      <span class="n">line</span><span class="o">.</span><span class="n">tr!</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span>
+      <span class="s1">&#39;!.,;&#39;</span><span class="o">.</span><span class="n">each_char</span> <span class="p">{</span> <span class="o">|</span><span class="n">mark</span><span class="o">|</span> <span class="n">line</span><span class="o">.</span><span class="n">gsub!</span><span class="p">(</span><span class="n">mark</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">}</span>
+      <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">word</span><span class="o">|</span>
+        <span class="k">yield</span> <span class="n">word</span>     <span class="c1"># Pass the control to the caller</span>
+      <span class="k">end</span>
+    <span class="k">end</span>  
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="n">freqs</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span> <span class="mi">0</span>
+<span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ex-1.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">each_word</span> <span class="p">{</span><span class="o">|</span><span class="n">w</span><span class="o">|</span> <span class="n">freqs</span><span class="o">[</span><span class="n">w</span><span class="o">.</span><span class="n">downcase</span><span class="o">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">}</span>
+<span class="nb">puts</span> <span class="n">freqs</span><span class="o">.</span><span class="n">max</span> <span class="p">{</span> <span class="o">|</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">|</span> <span class="n">a</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">&lt;=&gt;</span> <span class="n">b</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="p">}</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Modules and Mixins</h2></hgroup><article><p><em>Modules</em> are, essentially, classes <em>without</em> internal state.</p>
+<p>Modules can be <em>mixed-in</em> (included) in a class to extend functionality.</p>
+<div class="highlight"><pre><span class="k">module</span> <span class="nn">FriendlyModule</span>
+  <span class="k">def</span> <span class="nf">say_hello</span>
+    <span class="nb">puts</span> <span class="s2">&quot;Hello!&quot;</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">DNASequence</span>
+  <span class="kp">include</span> <span class="no">FriendlyModule</span>    <span class="c1"># Now the methods of FriendlyModule are</span>
+                            <span class="c1"># methods of DNASequence</span>
+<span class="k">end</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="no">DNASequence</span><span class="o">.</span><span class="n">new</span> <span class="s2">&quot;identifier&quot;</span>
+<span class="n">s</span><span class="o">.</span><span class="n">say_hello</span>
+<span class="c1"># =&gt; Hello!</span>
+</pre></div>
+</article></slide><slide >
+  <hgroup><h2>Useful mixins</h2></hgroup><article><p>If you are defining a class representing:</p>
+<ul>
+<li>
+<p>objects that can be <em>compared</em>, you should define the method <code>&lt;=&gt;</code> and include the module <code>Comparable</code>, which provides <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>&gt;=</code>, <code>&gt;</code>, and <code>between?</code>.</p>
+</li>
+<li>
+<p>a collection of items, you should define the iterator <code>each</code> and include the module <code>Enumerable</code>, which provides <em>47</em> (!!) methods (such as <code>member</code>, <code>find</code>, <code>each_with_index</code>) for free.</p>
+</li>
+</ul></article></slide><slide >
+  <hgroup><h1>Exercises (part 2)</h1></hgroup></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 2a:</strong><br />
+Write a class <code>DNASequence</code> representing a DNA sequence.<br />
+Such class should store (at least) two data: the <em>identifier</em> and the <em>sequence</em> itself. The sequence, if not empty, must contain only <code>A</code>, <code>C</code>, <code>G</code>, or <code>T</code> (lower and/or upper case). It should also define methods for computing:</p>
+<ul>
+<li>the length of the sequence</li>
+<li>its reverse and complement (two version: returning it as a copy and in-place)</li>
+<li>the GC content (number of <code>G</code> or <code>C</code> divided by the length)</li>
+<li>a string representing the DNA sequence in FASTA format (the sequence should be wrapped at a use-specified position, default: 80)</li>
+</ul>
+<p>File: <a href="../examples/ex-2a-dnasequence.rb"><code>lab/examples/ex-2a-dnasequence.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 2b:</strong><br />
+Write a class <code>FASTAReader</code> that reads a collection of DNA sequences from a FASTA file.<br />
+Since FASTA files are usually <em>huge</em>, you should never store the whole file in memory, but you should allow to process the sequences one by one. Sequences might be stored on different (consecutive) lines of different length.<br />
+Test the reader by processing the file <a href="../examples/ex-2.fa"><code>ex-2.fa</code></a> for computing:</p>
+<ul>
+<li>the length of the longest DNA sequence</li>
+<li>the identifiers of all the longest sequences</li>
+<li>a sequence with the lowest GC content</li>
+<li>the number of sequences containing the motif (pattern) <code>CAGCTCCAGCTCCAGC</code></li>
+</ul>
+<p>File: <a href="../examples/ex-2b-fastareader.rb"><code>lab/examples/ex-2b-fastareader.rb</code></a></p></article></slide><slide class="backdrop"></slide>
 </slides>
 
 <!--[if IE]>
