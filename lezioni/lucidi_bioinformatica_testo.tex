@@ -507,11 +507,11 @@ Suffissi di $T$ che iniziano con $P$
 \item
 Ricerca dicotomica
 \item
-Tempo $O(m \log n)$ -- caso pessimo
+Tempo $O(m \log m)$ -- caso pessimo
 \item
 Controllare tutto $P$ ad ogni iterazione
 \item
-$log_{2} n$ iterazioni
+$log_{2} m$ iterazioni
 \end{itemize}
 \end{block}
 \end{frame}
@@ -550,9 +550,9 @@ Non confrontare con i primi $Lcp(SA[L], SA[R])$ caratteri
 \item
 Caso 1: $l>r$
 \only<3->{\begin{itemize}\item
-$Lcp(L,M)>l$\only<4->{$\Rightarrow M\gets L$}
+$Lcp(L,M)>l$\only<4->{$\Rightarrow L\gets M$}
 \only<5->{\item
-$Lcp(L,M)<l$\only<6->{$\Rightarrow$\\ $R\gets M, r\gets Lcp(M,P)$}}
+$Lcp(L,M)<l$\only<6->{$\Rightarrow$\\ $R\gets M, r\gets Lcp(M,L)$}}
 \only<7->{\item
   $Lcp(L,M)=l$\only<8->{$\Rightarrow$ confronto $P[l+1:]$, $M[l+1:]$}
 }\end{itemize}}
@@ -577,22 +577,22 @@ $Lcp(L,M)<l$\only<6->{$\Rightarrow$\\ $R\gets M, r\gets Lcp(M,P)$}}
 \frametitle{Acceleranti 2: calcolo $Lcp$ in tempo $O(n)$}
 \begin{itemize}[<+->]
 \item
-Iterazione 1: $(L,R)=(1,n)$
+Iterazione 1: $(L,R)=(1,m)$
 \item
-Iterazione 2: $(L,R)=(1,n/2)$ oppure $(n/2,n)$
+Iterazione 2: $(L,R)=(1,m/2)$ oppure $(m/2,m)$
 \item
-Iterazione $k$: $L = h\frac{n}{2^{k-1}}$, $R = (h+1)\frac{n}{2^{k-1}}$
+Iterazione $k$: $L = h\frac{m}{2^{k-1}}$, $R = (h+1)\frac{m}{2^{k-1}}$
 \item
-Iterazione $\lceil \log_{2}n\rceil$: $R=L+1$, $Lcp(h,h+1)$
+Iterazione $\lceil \log_{2}m\rceil$: $R=L+1$, $Lcp(h,h+1)$
 \item
-Iterazione $\lceil \log_{2}n\rceil -1$: aggrego i risultati dell'iterazione
-$\lceil \log_{2}n\rceil$
+Iterazione $\lceil \log_{2}m\rceil -1$: aggrego i risultati dell'iterazione
+$\lceil \log_{2}m\rceil$
 \item
-Iterazione $k$: $Lcp(h\frac{n}{2^{k-1}}, (h+1)\frac{n}{2^{k-1}})$
+Iterazione $k$: $Lcp(h\frac{m}{2^{k-1}}, (h+1)\frac{m}{2^{k-1}})$
 \item
-$=\min\{Lcp(2h\frac{n}{2^{k}}, (2h+1)\frac{n}{2^{k}})$,
-$Lcp((2h+1)\frac{n}{2^{k}}+1, (2h+2)\frac{n}{2^{k}})$,
-$Lcp((2h+1)\frac{n}{2^{k}}), Lcp((2h+1)\frac{n}{2^{k}}+1)\}$
+$=\min\{Lcp(2h\frac{m}{2^{k}}, (2h+1)\frac{m}{2^{k}})$,
+$Lcp((2h+1)\frac{m}{2^{k}}+1, (2h+2)\frac{m}{2^{k}})$,
+$Lcp((2h+1)\frac{m}{2^{k}}), Lcp((2h+1)\frac{m}{2^{k}}+1)\}$
 \end{itemize}
 \end{frame}
 
@@ -691,7 +691,96 @@ $T[3i+1]T[3i+2]T_{0}[i+1:] <=> T[3j+2]T[3j+3]T_{1}[j+1:]$
 
 \begin{frame}
 \frametitle{KS}
+KS software
 \end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{KS: leq}
+\lstinputlisting{code/KS/KS-leq.c}
+\begin{block}{Notare:}
+\begin{enumerate}
+\item
+polimorfismo di \lstinline!leq!
+\item
+shortcut condizione
+\item
+condizione = espressione
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS: radix sort}
+\lstinputlisting{code/KS/KS-radix-sort.c}
+\begin{block}{Notare:}
+\begin{enumerate}
+\item
+\lstinline!int* a! è un array
+\item
+\lstinline!int* a! è solo una codifica
+\item
+Non restituisce valori
+\end{enumerate}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{KS: GetI}
+\lstinputlisting{code/KS/KS-define.c}
+\begin{block}{Notare:}
+\begin{enumerate}
+\item
+\lstinline!#define! è una macro
+\item
+viene valutata dal preprocessore in fase di compilazione
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS 1}
+\lstinputlisting{code/KS/KS1.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS 2}
+\lstinputlisting{code/KS/KS2.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS 3}
+\lstinputlisting{code/KS/KS3.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS 4}
+\lstinputlisting{code/KS/KS4.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS 5}
+\lstinputlisting{code/KS/KS5.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{KS 6}
+\lstinputlisting{code/KS/KS6.c}
+\end{frame}
+
+
+% \begin{frame}[fragile]
+% \frametitle{SAIS}
+% \lstinputlisting{code/sais/sais.start-end-bucket.c}
+%   \begin{itemize}[<+->]
+%   \item
+% Come migliorare il codice?
+% \item
+% 12: \lstinline!B[i]=sum; sum+=C[i];!
+% \end{itemize}
+% \end{frame}
+
 
 \begin{frame}[fragile]
 \frametitle{Sottostringa comune più lunga}

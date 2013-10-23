@@ -11,13 +11,10 @@ vc.tex:	../.git/logs/HEAD Makefile figs
 	./vc
 
 # Below are the code snippets
-code/sais/sais.h:	../sais/sais.h
+code/KS/KS-leq.c:	../KS/drittel.cpp
 	./cut_lines.sh $< $(@D)
 
-code/sais/sais.c:	../sais/sais.c
-	./cut_lines.sh $< $(@D)
-
-code: code/sais/sais.c code/sais/sais.h
+code: code/KS/KS-leq.c
 
 #The Makefile is released under a Creative Commons Attribution license.
 #The full text of the license is available here.
