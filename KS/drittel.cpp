@@ -47,7 +47,7 @@ void suffixArray(int* s, int* SA, int n, int K) {
     for (int i=0, j=0;  i < n+(n0-n1);  i++)
         if (i%3 != 0) s12[j++] = i;
 
-    // lsb radix sort the mod 1 and mod 2 triples
+    // least significant bit radix sort the mod 1 and mod 2 triples
     radixPass(s12 , SA12, s+2, n02, K);
     radixPass(SA12, s12 , s+1, n02, K);
     radixPass(s12 , SA12, s  , n02, K);
@@ -56,12 +56,14 @@ void suffixArray(int* s, int* SA, int n, int K) {
     // find lexicographic names of triples
     int name = 0, c0 = -1, c1 = -1, c2 = -1;
     for (int i = 0;  i < n02;  i++) {
-        if (s[SA12[i]] != c0 || s[SA12[i]+1] != c1 || s[SA12[i]+2] != c2) {
+        if (s[SA12[i]]!=c0 || s[SA12[i]+1]!=c1 || s[SA12[i]+2]!=c2) {
             name++;
             c0 = s[SA12[i]]; c1 = s[SA12[i]+1]; c2 = s[SA12[i]+2];
         }
-        if (SA12[i] % 3 == 1) { s12[SA12[i]/3]      = name; } // left half
-        else                  { s12[SA12[i]/3 + n0] = name; } // right half
+        if (SA12[i] % 3 == 1)
+            s12[SA12[i]/3]      = name;  // left half
+        else
+            s12[SA12[i]/3 + n0] = name;  // right half
     }
 /*** end: KS3.c */
 /*** start: KS4.c */
@@ -74,8 +76,10 @@ void suffixArray(int* s, int* SA, int n, int K) {
         for (int i = 0;  i < n02;  i++) SA12[s12[i] - 1] = i;
 /*** end: KS4.c */
 /*** start: KS5.c */
-    // stably sort the mod 0 suffixes from SA12 by their first character
-    for (int i=0, j=0;  i < n02;  i++) if (SA12[i] < n0) s0[j++] = 3*SA12[i];
+//stably sort the mod 0 suffixes from SA12 by their first character
+    for (int i=0, j=0;  i < n02;  i++)
+        if (SA12[i] < n0)
+            s0[j++] = 3*SA12[i];
     radixPass(s0, SA0, s, n0, K);
 /*** end: KS5.c */
 /*** start: KS6.c */
@@ -83,21 +87,25 @@ void suffixArray(int* s, int* SA, int n, int K) {
     for (int p=0,  t=n0-n1,  k=0;  k < n;  k++) {
         int i = GetI(); // pos of current offset 12 suffix
         int j = SA0[p]; // pos of current offset 0  suffix
+/*** end: KS6.c */
+/*** start: KS7.c */
         if (SA12[t] < n0 ?
-            leq(s[i],       s12[SA12[t] + n0], s[j],       s12[j/3]) :
-            leq(s[i],s[i+1],s12[SA12[t]-n0+1], s[j],s[j+1],s12[j/3+n0]))
+            leq(s[i],       s12[SA12[t] + n0],
+                s[j],       s12[j/3]         ) :
+            leq(s[i],s[i+1],s12[SA12[t]-n0+1],
+                s[j],s[j+1],s12[j/3+n0])     )
+/*** end: KS7.c */
+/*** start: KS8.c */
         { // suffix from SA12 is smaller
             SA[k] = i;  t++;
-            if (t == n02) { // done --- only SA0 suffixes left
+            if (t == n02) // done --- only SA0 suffixes left
                 for (k++;  p < n0;  p++, k++) SA[k] = SA0[p];
-            }
         } else {
             SA[k] = j;  p++;
-            if (p == n0)  { // done --- only SA12 suffixes left
+            if (p == n0)  // done --- only SA12 suffixes left
                 for (k++;  t < n02;  t++, k++) SA[k] = GetI();
-            }
         }
+/*** end: KS8.c */
     }
     delete [] s12; delete [] SA12; delete [] SA0; delete [] s0;
 }
-/*** end: KS6.c */
