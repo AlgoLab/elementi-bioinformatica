@@ -43,17 +43,157 @@ Slides: <a href="http://algolab.github.io/elementi-bioinformatica/lab/slides/">h
 Materiale: <a href="https://github.com/algolab/elementi-bioinformatica">https://github.com/algolab/elementi-bioinformatica</a><br /></p>
 <p>&nbsp;<br />
 A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></slide><slide >
-  <hgroup><h2>Elementi di Bioinformatica (Laboratorio)</h2></hgroup><article><p><strong>Contenuti:</strong></p>
-<ol>
-<li><a href="1-esercizi-Ruby.html">Esercizi Ruby - parte 1</a></li>
-<li><a href="2-esercizi-Ruby.html">Esercizi Ruby - parte 2</a></li>
-<li><a href="3-esercizi-Ruby.html">Esercizi Ruby - parte 3</a></li>
-<li>Manipolazione formati file in Ruby (FASTA/GTF)</li>
-<li>Manipolazione formati file in Ruby (SAM/BAM)</li>
-<li>Esercizi su sequenziamento</li>
-<li>Pipeline completa: estrazione dati, gestione dati</li>
-<li>Pipeline completa: allineamento, produzione output</li>
-</ol></article></slide><slide class="backdrop"></slide>
+  <hgroup><h1>Ruby Basic Facts (part 3)</h1></hgroup></slide><slide class="has_code">
+  <hgroup><h2>Ranges</h2></hgroup><article><p>Class <code>Range</code> represents ranges of consecutive values (numbers, tipically).</p>
+<p>Ranges can be created with literals:</p>
+<div class="highlight"><pre><span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="mi">25</span>    <span class="c1"># all the (integer) numbers from 10 to 25 (included)</span>
+<span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">25</span>   <span class="c1"># all the (integer) numbers from 10 (included) to 25 (excluded)</span>
+<span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;z&#39;</span>  <span class="c1"># ... works on characters, too</span>
+<span class="s1">&#39;alice&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;john&#39;</span>   <span class="c1"># ... and strings</span>
+</pre></div>
+
+<p>Can be used to index arrays/strings:</p>
+<div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;0123456789&quot;</span>
+<span class="n">a</span><span class="o">[</span><span class="mi">2</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span><span class="o">]</span>   <span class="c1"># =&gt; &quot;234&quot;</span>
+<span class="n">a</span><span class="o">[</span><span class="mi">2</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">3</span><span class="o">]</span>  <span class="c1"># =&gt; &quot;234&quot;</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Common methods of ranges (1)</h2></hgroup><article><p>Method <code>to_a</code> converts the range to an array (if reasonable).</p>
+<div class="highlight"><pre><span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>    <span class="c1"># =&gt; [10, 11, 12, 13, 14, 15]</span>
+<span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>   <span class="c1"># =&gt; [10, 11, 12, 13, 14]</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;e&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>    <span class="c1"># =&gt; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]</span>
+<span class="p">(</span><span class="s1">&#39;aa&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;bb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_a</span>  <span class="c1"># =&gt; [&#39;aa&#39;, &#39;ab&#39;, &#39;ac&#39;, ..., &#39;az&#39;, &#39;ba&#39;, &#39;bb&#39;]</span>
+</pre></div>
+
+<p>Method <code>include?(arg)</code> tells if <code>arg</code> is included in the range,<br />
+<code>cover?(arg)</code> if <code>arg</code> is between the endpoints.</p>
+<div class="highlight"><pre><span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">25</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="mi">24</span><span class="o">.</span><span class="mi">35</span>  <span class="c1"># =&gt; true</span>
+<span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">25</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="mi">25</span>     <span class="c1"># =&gt; false</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;z&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="s1">&#39;b&#39;</span>   <span class="c1"># =&gt; true</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;z&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="s1">&#39;banana&#39;</span>  <span class="c1"># =&gt; false</span>
+<span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;z&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cover?</span> <span class="s1">&#39;banana&#39;</span>    <span class="c1"># =&gt; true</span>
+<span class="p">(</span><span class="s1">&#39;alice&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;john&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span> <span class="s1">&#39;bob&#39;</span>  <span class="c1"># =&gt; false</span>
+<span class="p">(</span><span class="s1">&#39;alice&#39;</span><span class="o">.</span><span class="n">.</span><span class="s1">&#39;john&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cover?</span> <span class="s1">&#39;bob&#39;</span>    <span class="c1"># =&gt; true</span>
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2>Common methods of ranges (2)</h2></hgroup><article><p>Other methods are: <code>begin</code>, <code>end</code>, <code>min</code>, <code>max</code>, <code>exclude_end?</code></p>
+<div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">15</span>
+<span class="n">a</span><span class="o">.</span><span class="n">begin</span>   <span class="c1"># =&gt; 10</span>
+<span class="n">a</span><span class="o">.</span><span class="n">end</span>     <span class="c1"># =&gt; 15</span>
+<span class="n">a</span><span class="o">.</span><span class="n">min</span>     <span class="c1"># =&gt; 10</span>
+<span class="n">a</span><span class="o">.</span><span class="n">max</span>     <span class="c1"># =&gt; 14</span>
+<span class="n">a</span><span class="o">.</span><span class="n">exclude_end?</span>   <span class="c1"># =&gt; true</span>
+</pre></div>
+
+<p><em>Ranges can be iterated!!</em><br />
+(They define method <code>each</code> and include <code>Enumerable</code>.)</p>
+<div class="highlight"><pre><span class="p">(</span><span class="mi">10</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="nb">puts</span> <span class="n">i</span> <span class="p">}</span>
+<span class="c1"># =&gt; 10</span>
+<span class="c1"># =&gt; 11</span>
+<span class="c1"># =&gt; 12</span>
+</pre></div>
+</article></slide><slide >
+  <hgroup><h1>Exercises (part 3)</h1></hgroup></slide><slide >
+  <hgroup><h2>The Gene Transfer Format (simplified)</h2></hgroup><article><p>A GTF file is a TAB-separated 9-column text file.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Field</th>
+<th>Values/format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>chromosome</td>
+<td><code>chr{1,2,3,...,22,X,Y,M}</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>source</td>
+<td>(ignore)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>feature-type</td>
+<td><code>exon</code> (other values are ignored)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>genomic start</td>
+<td>integer-value (1-based)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>genomic end</td>
+<td>integer-value (1-based, inclusive)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>score</td>
+<td><code>.</code> (ignore)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>strand</td>
+<td><code>{+,-}</code> (assume always <code>+</code>)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>genomic phase</td>
+<td><code>{0,1,2,.}</code> (ignore)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>information</td>
+<td>key-value pairs (see next slide)</td>
+</tr>
+</tbody>
+</table></article></slide><slide >
+  <hgroup><h2>The Gene Transfer Format (simplified)</h2></hgroup><article><p>Key-value pairs in 9th column (format: <code>key "value";</code> )</p>
+<table>
+<thead>
+<tr>
+<th>key name</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gene_id</code></td>
+<td><code>ENSGXXXXXXXXXXX</code></td>
+</tr>
+<tr>
+<td><code>transcript_id</code></td>
+<td><code>ENSTXXXXXXXXXXX</code></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;<br />
+Other information are possible but let us focus on these twos (mandatory).</p></article></slide><slide >
+  <hgroup><h2>Describing a gene structure</h2></hgroup><article><p>An <em>exon</em> is identified by a pair of genomic coordinates.</p>
+<p>A <em>transcript</em> has a unique id, is located on a chromosome on a specific strand, and is composed of exons.</p>
+<p>A <em>gene</em> has a unique id, is located on a chromosome on a specific strand, and is a collection of transcripts.</p>
+<p><em>Constraints:</em><br />
+All the transcripts of the same gene are located on the same chromosome and on the same strand.</p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 3a:</strong><br />
+Write two classes <code>AnnotatedTranscript</code> and <code>AnnotatedGene</code> representing a gene whose intron-exon structure is known (annotated) as described in the previous slide.<br />
+These classes should implement a method <code>to_s</code> that returns a string with the description of the gene structure in the (simplified) GTF format.<br />
+(Use <code>unknown</code> as value of the second field 'source'.)</p>
+<p>Prepare a simple program that builds an example of an object of class <code>AnnotatedGene</code> and then prints it for testing the implementation.</p>
+<p>File: <a href="../examples/ex-3a-annotgene.rb"><code>lab/examples/ex-3a-annotgene.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 3b:</strong><br />
+Write a class <code>GTFReader</code> that reads a collection of <code>AnnotatedGene</code>s from a (simplified) GTF file.<br />
+A GTF file is usually quite small, thus we can assume that the entire collection fits in RAM.</p>
+<p>Test the reader by processing the file <a href="../examples/ex-3.gtf"><code>ex-3.gtf</code></a> for computing:</p>
+<ul>
+<li>the number of genes and the total number of transcripts</li>
+<li>the average number of transcripts per gene</li>
+<li>the number of genes with a single transcript</li>
+<li>the average number of exons for each transcript</li>
+</ul>
+<p>File: <a href="../examples/ex-3b-gtfreader.rb"><code>lab/examples/ex-3b-gtfreader.rb</code></a></p></article></slide><slide class="backdrop"></slide>
 </slides>
 
 <!--[if IE]>
