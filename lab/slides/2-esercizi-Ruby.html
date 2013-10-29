@@ -108,7 +108,7 @@ A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></sl
 
   <span class="c1"># ... as before ...</span>
 
-  <span class="kp">attr_reader</span> <span class="ss">:identifier</span>
+  <span class="kp">attr_reader</span> <span class="ss">:identifier</span><span class="p">,</span> <span class="ss">:seq</span>
 
   <span class="k">def</span> <span class="nf">seq</span><span class="o">=</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>               <span class="c1"># &#39;seq&#39; can be used as lvalue now</span>
     <span class="k">if</span> <span class="n">seq</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;ACGTacgt&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">seq</span><span class="o">.</span><span class="n">length</span>
