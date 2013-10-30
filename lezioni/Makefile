@@ -47,4 +47,4 @@ clean :
 	rm -f ./*.pdf ./figures/*.pdf && latexmk -c
 
 dist: pdf vc.tex
-	$(foreach f,$(TARGETS), ~/bin/dropbox_uploader.sh upload $(f) /Didattica/Elementi-Bioinformatica/$(f);)
+	$(foreach f,$(TARGETS), ~/bin/dropbox_uploader.sh upload $(f) /Didattica/Elementi-Bioinformatica/$(f) && cp $(f) ~/Ubuntu\ One/Public/didattica/;)
