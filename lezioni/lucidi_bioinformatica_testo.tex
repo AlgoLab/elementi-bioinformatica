@@ -887,7 +887,7 @@ Si controlla se uno dei due array ordinati è finito
 \begin{frame}[fragile]
 \frametitle{Sottostringa comune più lunga}
 \begin{block}{Due stringhe $s_{1}$ e $s_{2}$}
-\begin{itemize}
+\begin{itemize}[<+->]
 \item
 Suffix tree generalizzato = insieme di stringhe
 \item
@@ -918,20 +918,22 @@ $s_{1}$: BANANA\$, $s_{2}$: PANNA\$
 \begin{frame}[fragile]
 \frametitle{Sottostringa comune più lunga}
 \begin{block}{$k$ stringhe $\{s_{1}, \ldots , s_{k}\}$}
-\begin{itemize}
+\begin{enumerate}[<+->]
 \item
 Suffix tree generalizzato
 \item
 Vettore $C_{x}[1:k]$ per ogni nodo $x$
 \item
-$C_{x}[i]$: $x$ ha una foglia di $s_{i}$
+$C_{x}[i]$: sottoalbero con radice $x$ ha una foglia di $s_{i}$
 \item
 $C_{x} = \bigvee C$ sui figli di $C$
 \item
-Nodo $z$, $C_{z}=\bar{1}$
+Nodo $z$, $C_{z}=$ tutti ${1}$
 \item
 Tempo $O(kn)$
-\end{itemize}
+\item
+$n$: summa lunghezze $|s_{1}| + \cdots + |s_{k}|$
+\end{enumerate}
 \end{block}
 \end{frame}
 
@@ -968,7 +970,7 @@ Algoritmo complesso, ma pratico
 \begin{frame}[fragile]
 \frametitle{Sottostringa comune più lunga di $k$ stringhe}
 \begin{block}{Arricchimento $ST$}
-\begin{itemize}
+\begin{enumerate}[<+->]
 \item
 $N_{x}[i]$: numero foglie di $s_{i}$ discendenti di $x$
 \item
@@ -976,7 +978,7 @@ $N_{x}[i]=0$ o $1$ per ogni foglia
 \item
 $N_{x}[i]=$ somma dei figli
 \item
-$D_{x}[i]$: numero di duplicati di foglie di $s_{i}$ discendenti di $x$
+$D_{x}[i]$: numero di consecutive di foglie di $s_{i}$, ordinate secondo visita depth-first, discendenti di $x$
 \item
 $N_{x}[i]=0 \Rightarrow D_{x}[i]=0$
 \item
@@ -985,7 +987,7 @@ $N_{x}[i]=1 \Rightarrow D_{x}[i]=0$
 $N_{x}[i]\ge 1 \Rightarrow D_{x}[i]=N_{x}[i]-1$
 \item
 $N_{x}[i] - D_{x}[i] =$ \uncover<2->{$C_{x}[i]$}
-\end{itemize}
+\end{enumerate}
 \end{block}
 \end{frame}
 
