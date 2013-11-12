@@ -43,17 +43,34 @@ Slides: <a href="http://algolab.github.io/elementi-bioinformatica/lab/slides/">h
 Materiale: <a href="https://github.com/algolab/elementi-bioinformatica">https://github.com/algolab/elementi-bioinformatica</a><br /></p>
 <p>&nbsp;<br />
 A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></slide><slide >
-  <hgroup><h2>Elementi di Bioinformatica (Laboratorio)</h2></hgroup><article><p><strong>Contenuti:</strong></p>
-<ol>
-<li><a href="1-esercizi-Ruby.html">Esercizi Ruby - parte 1</a></li>
-<li><a href="2-esercizi-Ruby.html">Esercizi Ruby - parte 2</a></li>
-<li><a href="3-esercizi-Ruby.html">Esercizi Ruby - parte 3</a></li>
-<li><a href="4-esercizi-Ruby.html">Manipolazione formati file in Ruby (FASTA/GTF)</a></li>
-<li>Manipolazione formati file in Ruby (SAM/BAM)</li>
-<li>Esercizi su sequenziamento</li>
-<li>Pipeline completa: estrazione dati, gestione dati</li>
-<li>Pipeline completa: allineamento, produzione output</li>
-</ol></article></slide><slide class="backdrop"></slide>
+  <hgroup><h1>Ruby exercises - part 4<br /><span style="font-size: 75%">Manipulation of FASTA and GTF files</span></h1></hgroup></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 4a:</strong><br />
+Add to the existing class <a href="../examples/ex-3a-annotgene.rb"><code>AnnotatedTranscript</code></a> the information about the nucleotide sequence of the transcript.</p>
+<p>Now <code>AnnotatedTranscript</code> and <code>AnnotatedGene</code> should also provide the methods <code>to_fasta</code> and <code>to_gtf</code> for producing the corresponding two representations of the transcript/gene.</p>
+<p><em>Question:</em> is there a "smart" method for achieving such aim?<br />
+<em>Hint:</em> think about code re-use...</p>
+<p>Prepare a simple program that builds an example for testing the implementation.</p>
+<p>File: <a href="../examples/ex-4a-annotgene.rb"><code>lab/examples/ex-4a-annotgene.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 4b:</strong><br />
+Adapt the existing class <a href="../examples/ex-3b-gtfreader.rb"><code>GTFReader</code></a> in order to read the sequence information from an additional FASTA file if is specified as an optional parameter.</p>
+<p><em>Note 1:</em> For this exercise, assume that all the transcripts are on the <code>+</code> strand.<br />
+<em>Note 2:</em> FASTA files are big, do not attempt to store all the genomic sequences in RAM.</p>
+<p>Test your implementation using the GTF file <a href="../examples/ex-4-plus.gtf"><code>ex-4-plus.gtf</code></a> and the FASTA file of the genomic sequences <a href="../examples/ex-4.fa"><code>ex-4.fa</code></a>.<br />
+The resulting FASTA file should be identical to <a href="../examples/ex-4-transcripts-plus.fa"><code>ex-4-transcripts-plus.fa</code></a>.</p>
+<p>File: <a href="../examples/ex-4b-gtfreader.rb"><code>lab/examples/ex-4b-gtfreader.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>A note regarding the strand</h2></hgroup><article><p>A transcript on the <em>plus</em> strand:</p>
+<p class="center"><img alt="A transcript on the plus strand" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAAqCAQAAADhCvcYAAAAAXNSR0IArs4c6QAAAAJiS0dEAP+Hj8y/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsMABoiOj+QxwAABFlJREFUeNrtneF5pCAQhpl9rhEru1LS0bWQ6+BKoJS5H1l1wGHBjW7AfV+fJGRkwcVPx0HBoKqqGtUHO3bs2LFj9+23AAAA8AQ4kEsjNAGgP8CBgCxL+TCdaCYY2KlIpnbonV80wTho5cDU5SBUGgs6dyKauAzN3IcmfwEHAgddu2nFfSgHHnSu41mjkrgRJebAgcDZ8YfnHFab7ugwAOgvksaVjAT3QAaLP2oHnGzWaNAQ73/zBTv2M+0tjkKChOisUaJoIhA48rrtURfW3B2g3AOB4aIRWe6BpJ1akQYiAoHjDjb/qkyX3/GeC6D3Dqwvl2EjEKtvIhAcCABA9ZIIR4EDAQAAHAhcr7sAAP0BDqQKj/8B+gMUiAMBAICOOfExXskmK8gD2tSePqI6FcJfa5eG/PDOV2LP6a+UP9dcKQ0wqyI+VGB+1mtRVG8KvJ3XeME0W3SftVjtcn8aQ5aGV3fSwGjy1PMDgfyXzrSgv9k+Jfor5U8156cBWhUoiVWChlhRVK66+OMKPC0C0WRqtPL1XHlup/pukYb88J58R3+tukR/cKwCp51nwOnHFXh7RUOqGyFYu2bTN0+Fw9faJWl4OhCgrD8t6G+2R6O/Uv5cc6U0QJsCQ2a3U7pIZdLU1vwXcCBS+F+cppyJhc/H5BO+HeA7+pOHXRH1NECbArfuxE/3rMBfZzaanZ1p+xVTu02X5nOy9lIa4Hv6K885hv5gnwKnHQpsUVR/CjwtAknntYnuZOTWnkcg/uTlMfm0unaA8rxKkilId+RPNVdKA8yaiDsUGEz+0KjA+OMKvL2+WfvKD+92WKM/QIHDOhAAALgGOBAYCFmW40tusx3zHQCuAS+UgsHCf/v293UGAknW5/b5v+mels1tx7VMCeuI9MntFBB3W/LR7Gre/W1nSsjfHultJwARCMDJ8UjMRo/nMxNIMgZYzIwI6djdyZzU1TiRWBg/bMcvrW5Ek+2RykwJthzhzRiAAwF4dTyyXsGLcxWvxQ4vTXLGzF5zXJOpS8zzMtODuh6Voyd1zAHgQACqp/Ty6373zRLUklOzSEaSiKK9TFuOMp8WDAj3QOASsYg/kEqyeEOqUUZ9eJZu7oFo1vHVtnXqzABMFxYQgQCc6iy8k63eT+XpenUGqGrwx/imJa35S5HDdlu+BnZp9rMtR51yuAMCOBCASzin3ssEwIEAAAAOBAAA3t6BiDPa9+9pqX8vqOPq9do9NiV7bpzvu24/+7f/eq3eaOdnjtUpOWplELuLqqpq1Jlglo/F/rGs/1jy57ZHqVhYGwufoN72eoOzjPZ97Zazf3uvNz1H0M7t9YahlxXrLx44kKC/SXWf8paxvwd7lb31PsfqhR0IVxJEIEQg1EsEQgTylAOZ7Z/L2s+lgK1N9XMpJ18b3VJU/7ilUO+eesu7epzvu245+7f/er2TCu3cUu8bOJAU7NixY8eO3bfzGC8AABzzGC8AAEAL/wG70dUHlg7cjQAAAABJRU5ErkJggg==" /><br /></p>
+<p>A transcript on the <em>minus</em> strand:</p>
+<p class="center"><img alt="A transcript on the minus strand" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAAqCAQAAADhCvcYAAAAAXNSR0IArs4c6QAAAAJiS0dEAP+Hj8y/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsMACAuFiAClQAABKJJREFUeNrtne1x2zAMQIlcF9FkHSUbdYV0g47AbIL+UCTxCxQtKY5Iv9fzlYZp0kIAQaBIymmE1zLIkSNHjhx5LH9zAAAAByCADI2gAsAegQCC081lqdbAQWGkoCKR5WPdBBA4FT7UqelGUg0yAHe2cokChSS2Pzmt2j78FL9Qwb1JncYOHxr8v7wD6CF8LDY7rVZcsn0ggMBpV5NK+HBZ4MAF4f4XSXt47PimMIQ1hKtpMASQfhL+88l75MifKW8JFFLMn9u+DwQQyDIICcKENTilQdovzqM46PQSabvXEdq+VGwfCCBQdajwnZWX6PrCzaC/rFqdc1MUKELbJwMhgAAAVPAECgIIAAAQQGCQ4QEA7BEIIF9M/OUugcmR6BG/xh7JQAAA4MmcXkgo0drRPE3N5RKUykmtRLXdbv0xrhmO6VEqwwPosa7HtA72eF6P2OMZv5bEw+9vjyczkDDltBYLxXKJVFtaVx3Kp2hW+Li74cgJPVr1xdDdK+nRG3r00UTRbRMYb9ijN/Q46grpR/06nD3VYo/4dUkuiYfvnx9/3q9PZiA+MDWpXHcs8ik5RGlQfEv93tFsR926HiVbe67o8ZAe4zpTwwlVDPlIPO7Xtk6xx+P2eP/z49t1qirvlxnKw1c8mFVO+2plN6zJPaZHrexTih69oUdf1J21gj+Ux3r02KNz65Yl2OM5PbrMHu9/frwsgIjxPk7i/LpeOo3Gcb398qi06VFXPUo1aUaPNT3mzowez+oRezyuR9ehPZ4cwprWuKdGiqZm6qbGTZ9Q7oOyDnyzTQ7rsU2/S/kTPQbyuE6LPeqL2ON0WI9t9ohf1/X4+aA9/pxfn8xAvLFbzZTs31SOk+X6ztz9adxNDqxdf6RBj1Z99KjrEFOqR1/Uabl+KHdG/dF41K9b6mOP+35t7Xx3X79++y4DvFf9fg3wXvXR42vrEb/GHp8SQAAAYHQIINAhEj07+9qW22TXHANA3/BIW+h0CCB8Cvzk8pn0JXm6bkGyW4/xOptlnttUHBiQ4m+J5Usv6e9xxkoeefogBAAZCLx0PuKLM+k3uSRrzn20/nw7lU/RHPwtiPjCDUr5mpYuazDYHoTkoydE5r/HakeaH/4KQAABuCgf2a7gpXAVr+aAl0Y1fSLfC1xT9LhhLcjzvmrt6DcNzAEQQAB2T+lqPvb3sZ2CWmpqkslIlFG0txm2owPvDAXjwT0QGCoXKS+mkiTfkN0sY3/JoGb3QDQZ+Gr7dZrcM2nNfwDIQAAOB4vSyXbb5CX8PL2z4IN65VZdVt/KHPLfMi8w1OSVt6OFdrgDAgQQgCGC093bBCCAAAAAAQQAAF4+gMQrff+t8r9PLdEv/dJvX/2GZw70PJemZHp2v8ebTTLXCL+Wlvt5qqrvq/x9/fx9rZ/KaiVvfOqNb9Av/dJvX/1uZw70vJTCs2nfx7sdxSzfDSBOf1OiRIkSpRMlN9BxPBRAuGKjX/qlXzIQMpBDGcjMn1X+EZV8QTa381H8hi+2MrdT+gb90i/99tVveOZAz3MpvXbv93ibAwhy5MiRI0dekzONFwAArp3GCwAAUOM/Mw7WQX9zscQAAAAASUVORK5CYII=" /><br /></p>
+<p>The first exon is that with the largest coordinates.<br />
+The first nucleotide of the first exon is the "last" nucleotide of the exon substring.<br />
+The transcript sequence is <em>complemented</em> wrt the genomic sequence.</p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 4c:</strong><br />
+Adapt the class <a href="../examples/ex-3b-gtfreader.rb"><code>GTFReader</code></a> of the previous exercise in order to read the sequence information from an additional FASTA file if is specified as an optional parameter <em>also for genes on the minus strand</em> (<code>-</code>).</p>
+<p><em>Note:</em> FASTA files are big, do not attempt to store all the genomic sequences in RAM.</p>
+<p>Test your implementation using the GTF file <a href="../examples/ex-4-plus-minus.gtf"><code>ex-4-plus-minus.gtf</code></a> and the FASTA file of the genomic sequences <a href="../examples/ex-4.fa"><code>ex-4.fa</code></a>.<br />
+The resulting FASTA file should be identical to <a href="../examples/ex-4-transcripts-plus-minus.fa"><code>ex-4-transcripts-plus-minus.fa</code></a>.</p>
+<p>File: <a href="../examples/ex-4c-gtfreader.rb"><code>lab/examples/ex-4c-gtfreader.rb</code></a></p></article></slide><slide class="backdrop"></slide>
 </slides>
 
 <!--[if IE]>

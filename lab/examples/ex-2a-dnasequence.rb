@@ -26,10 +26,10 @@ class DNASequence
 
   def sequence=(seq_str)
     if seq_str
-      if seq_str.count("ACGTacgt") == seq_str.length
+      if seq_str.count("ACGTNacgtn") == seq_str.length
         @sequence = String.new seq_str
       else
-        puts "Invalid sequence! The allowed alphabet is 'ACGTacgt'"
+        puts "Invalid sequence! The allowed alphabet is 'ACGTNacgtn'"
       end
     end
   end
