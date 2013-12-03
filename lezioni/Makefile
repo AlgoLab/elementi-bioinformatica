@@ -14,7 +14,15 @@ vc.tex:	../.git/logs/HEAD Makefile figs
 code/KS/KS-leq.c:	../KS/drittel.cpp
 	./cut_lines.sh $< $(@D)
 
-code: code/KS/KS-leq.c
+
+code/samtools/chk_indel.c:	../samtools/examples/chk_indel.c
+	./cut_lines.sh $< $(@D)
+
+code/samtools/samclose.c:	../samtools/sam.c
+	./cut_lines.sh $< $(@D)
+
+
+code: code/KS/KS-leq.c code/samtools/chk_indel.c code/samtools/samclose.c
 
 #The Makefile is released under a Creative Commons Attribution license.
 #The full text of the license is available here.
