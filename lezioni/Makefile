@@ -54,5 +54,5 @@ figs: $(pdfs) $(burstpdfs) $(externalfigs) $(svgfigspdf)
 clean :
 	rm -f ./*.pdf ./figures/*.pdf && latexmk -c
 
-dist: pdf vc.tex
-	$(foreach f,$(TARGETS), ~/bin/dropbox_uploader.sh upload $(f) /Didattica/Elementi-Bioinformatica/$(f) && cp $(f) ~/Ubuntu\ One/Public/didattica/;)
+release: pdf vc.tex
+	$(foreach f,$(TARGETS), rsync -aq  $(f)  ~/Documenti/Didattica/Bioinformatica/Materiale\ scaricabile/ && rsync -aq $(f) ~/Ubuntu\ One/Public/didattica/;)
