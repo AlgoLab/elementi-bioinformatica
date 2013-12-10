@@ -43,17 +43,157 @@ Slides: <a href="http://algolab.github.io/elementi-bioinformatica/lab/slides/">h
 Materiale: <a href="https://github.com/algolab/elementi-bioinformatica">https://github.com/algolab/elementi-bioinformatica</a><br /></p>
 <p>&nbsp;<br />
 A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></slide><slide >
-  <hgroup><h2>Elementi di Bioinformatica (Laboratorio)</h2></hgroup><article><p><strong>Contenuti:</strong></p>
+  <hgroup><h1>Ruby exercises - part 5<br /><span style="font-size: 75%">Manipulation of SAM/BAM files</span></h1></hgroup></slide><slide >
+  <hgroup><h2>SAM/BAM files (reprise)</h2></hgroup><article><p>SAM/BAM files are used to represent and store <em>alignments to (some) reference sequences</em>.</p>
+<ul>
+<li><em>SAM</em>: tab-delimited text files (human-readable)</li>
+<li><em>BAM</em>: binary compressed files (machine-readable/save space)</li>
+</ul>
+<p>Formal specification: <a href="http://samtools.github.io/hts-specs/SAMv1.pdf">http://samtools.github.io/hts-specs/SAMv1.pdf</a></p>
+<p><em>Note:</em> SAM and BAM formats are equivalent!<br />
+BAM is usually preferred because files are often very big.</p></article></slide><slide >
+  <hgroup><h2>SAM/BAM example</h2></hgroup><article><p><em>Alignments:</em></p>
+<pre><code>Coor    12345678901234  567890123456789
+ref     AGCATGTTAGATAA**GATAGCTGTGCTAGT
++r001         TTAGATAAAGGATA*CTG
++r002        aaaAGACAA*GGATA
+</code></pre>
+<p><em>Corresponding SAM:</em></p>
+<pre><code>@HD VN:1.5 SO:coordinate
+@SQ SN:ref LN:29
+r001  0  ref  7  30  8M2I4M1D3M  *  0  0  TTAGATAAAGGATACTG  *
+r002  0  ref  9  30  3S6M1P1I4M  *  0  0  AAAAGACAAGGATA     *
+</code></pre></article></slide><slide >
+  <hgroup><h2>Reference sequence</h2></hgroup><article><p>SAM/BAM <em>does not</em> store the reference sequence.<br />
+We also need a FASTA file containing the entry (possibly with other entries):</p>
+<p><em>FASTA reference file:</em></p>
+<pre><code>    ><span style="color: blue; font-weight:bold;">ref</span>
+    AGCATGTTAGATAAGATAGCTGTGCTAGT
+</code></pre>
+
+<p><em>SAM file:</em></p>
+<pre><code>    @HD VN:1.5 SO:coordinate
+    @SQ SN:<span style="color: blue; font-weight:bold;">ref</span> LN:29
+    r001  0  <span style="color: blue; font-weight:bold;">ref</span>  7  30  8M2I4M1D3M  *  0  0  TTAGATAAAGGATACTG  *
+    r002  0  <span style="color: blue; font-weight:bold;">ref</span>  9  30  3S6M1P1I4M  *  0  0  AAAAGACAAGGATA     *
+</code></pre></article></slide><slide >
+  <hgroup><h2>Ways for "reading" a SAM/BAM file</h2></hgroup><article><p>Two ways for "reading" a SAM/BAM file:</p>
 <ol>
-<li><a href="1-esercizi-Ruby.html">Esercizi Ruby - parte 1</a></li>
-<li><a href="2-esercizi-Ruby.html">Esercizi Ruby - parte 2</a></li>
-<li><a href="3-esercizi-Ruby.html">Esercizi Ruby - parte 3</a></li>
-<li><a href="4-esercizi-Ruby.html">Manipolazione formati file in Ruby (FASTA/GTF)</a></li>
-<li><a href="5-esercizi-Ruby.html">Manipolazione formati file in Ruby (SAM/BAM)</a></li>
-<li>Esercizi su sequenziamento</li>
-<li>Pipeline completa: estrazione dati, gestione dati</li>
-<li>Pipeline completa: allineamento, produzione output</li>
-</ol></article></slide><slide class="backdrop"></slide>
+<li>By row/by alignment</li>
+<li>By column/by base (<em>pileup</em>)</li>
+</ol>
+<h3><em>Example</em></h3>
+<pre><code>Coor    12345678901234  567890123456789
+ref     AGCATGTTAGATAA**GATAGCTGTGCTAGT
++r001         TTAGATAAAGGATA*CTG
++r002        aaaAGACAA*GGATA
+</code></pre></article></slide><slide >
+  <hgroup><h2>Sorting and indexing SAM/BAM files</h2></hgroup><article><p>SAM/BAM files must be <em>sorted</em> and <em>indexed</em> to allow for fast by-column enumeration and for fast random access to specific regions.</p>
+<p>Most toolkits (such as <a href="http://samtools.sourceforge.net/"><code>samtools</code></a>) and libraries provide convenience method for sorting and indexing a SAM/BAM file.<br />
+Such operations need to be performed only once.</p>
+<p>The <em>sorting</em> operation modifies the SAM/BAM files and should set the header tag <code>SO</code> to <code>coordinate</code> (not always).<br />
+The <em>indexing</em> operation produces an additional file with extension <code>.bai</code>.</p></article></slide><slide >
+  <hgroup><h2>SAM/BAM parsing in Ruby</h2></hgroup><article><p><strong><code>bio-samtools</code></strong> is a Ruby library ("gem") for accessing SAM/BAM files.<br />
+It relies on <code>samtools</code>, a fast C library for SAM/BAM parsing.</p>
+<p><em>Features:</em><br />
+- easy access to most of the <code>samtools</code> functionalities<br />
+- fast, since most of the work is directly performed by <code>samtools</code></p>
+<p><em>Home page</em>: <a href="">https://github.com/helios/bioruby-samtools</a></p>
+<p><em>Documentation</em>: <a href="">http://rubydoc.info/gems/bio-samtools/0.6.0/frames</a></p>
+<p><em>Tutorial</em>: <a href="">https://github.com/helios/bioruby-samtools/raw/master/doc/tutorial.pdf</a></p>
+<p><em>Citation</em>: <a href="">http://www.scfbm.org/content/7/1/6</a></p></article></slide><slide class="has_code">
+  <hgroup><h2><code>bio-samtools</code> - Installation</h2></hgroup><article><p><strong><code>bio-samtools</code></strong> is a <strong>gem!!</strong></p>
+<p>It suffices to use the following command from the shell:</p>
+<div class="highlight"><pre>gem install bio-samtools
+</pre></div>
+
+<p><em>Notes:</em><br />
+- Dependencies are automatically handled<br />
+- <code>samtools</code> is automatically compiled (but a C compiler is needed)</p>
+<p><em>Usage:</em><br />
+Add the following line to the Ruby code using <code>bio-samtools</code></p>
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;bio-samtools&#39;</span>
+</pre></div>
+</article></slide><slide >
+  <hgroup><h2><code>bio-samtools</code> - Main functionalities</h2></hgroup><article><p><code>bio-samtools</code> provides 3 main classes:</p>
+<ul>
+<li><code>Bio::DB::Sam</code><br />
+  represents whole SAM/BAM files</li>
+<li><code>Bio::DB::Alignment</code><br />
+  represents a single sequence alignment (a "row")</li>
+<li><code>Bio::DB::Pileup</code><br />
+  represents a single genomic location (a "column")</li>
+</ul></article></slide><slide class="has_code">
+  <hgroup><h2><code>bio-samtools</code> - Examples</h2></hgroup><article><div class="highlight"><pre><span class="c1"># Prepare a SAM/BAM file for opening</span>
+<span class="n">bam</span> <span class="o">=</span> <span class="ss">Bio</span><span class="p">:</span><span class="ss">:DB</span><span class="o">::</span><span class="no">Sam</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:bam</span> <span class="o">=&gt;</span> <span class="s1">&#39;ex-5.bam&#39;</span><span class="p">,</span> <span class="ss">:fasta</span> <span class="o">=&gt;</span> <span class="s1">&#39;ex-5.fa&#39;</span><span class="p">)</span>
+<span class="c1"># Open the file</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">open</span>
+
+<span class="c1"># Return an array of 10 elements containing the &quot;coverage&quot;</span>
+<span class="c1"># starting from position 108161 of &quot;chr1&quot;</span>
+<span class="nb">puts</span> <span class="n">bam</span><span class="o">.</span><span class="n">chromosome_coverage</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="mi">108161</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Return the average coverage of the region</span>
+<span class="nb">puts</span> <span class="n">bam</span><span class="o">.</span><span class="n">average_coverage</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="mi">108050</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">bam</span><span class="o">.</span><span class="n">average_coverage</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="mi">108161</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Close the file</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">close</span>
+</pre></div>
+
+<p>File: <a href="../examples/ex-5a-bam-example.rb"><code>lab/examples/ex-5a-bam-example.rb</code></a></p></article></slide><slide class="has_code">
+  <hgroup><h2><code>bio-samtools</code> - Examples</h2></hgroup><article><div class="highlight"><pre><span class="c1"># Prepare a SAM/BAM file for opening</span>
+<span class="n">bam</span> <span class="o">=</span> <span class="ss">Bio</span><span class="p">:</span><span class="ss">:DB</span><span class="o">::</span><span class="no">Sam</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:bam</span> <span class="o">=&gt;</span> <span class="s1">&#39;ex-5.bam&#39;</span><span class="p">,</span> <span class="ss">:fasta</span> <span class="o">=&gt;</span> <span class="s1">&#39;ex-5.fa&#39;</span><span class="p">)</span>
+<span class="c1"># Open the file</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">open</span>
+
+<span class="c1"># Process the reads overlapping region chr1:108065-108070</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="s2">&quot;chr1&quot;</span><span class="p">,</span> <span class="mi">108065</span><span class="p">,</span> <span class="mi">108070</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">aln</span><span class="o">|</span>
+    <span class="c1"># &#39;aln&#39; is a Bio::DB:Alignment object</span>
+    <span class="c1"># Print the read name</span>
+    <span class="nb">puts</span> <span class="n">aln</span><span class="o">.</span><span class="n">qname</span>
+<span class="k">end</span>
+
+<span class="c1"># Close the file</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">close</span>
+</pre></div>
+
+<p>File: <a href="../examples/ex-5a-bam-example.rb"><code>lab/examples/ex-5a-bam-example.rb</code></a></p></article></slide><slide class="has_code">
+  <hgroup><h2><code>bio-samtools</code> - Examples</h2></hgroup><article><div class="highlight"><pre><span class="c1"># Prepare a SAM/BAM file for opening</span>
+<span class="n">bam</span> <span class="o">=</span> <span class="ss">Bio</span><span class="p">:</span><span class="ss">:DB</span><span class="o">::</span><span class="no">Sam</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:bam</span> <span class="o">=&gt;</span> <span class="s1">&#39;ex-5.bam&#39;</span><span class="p">,</span> <span class="ss">:fasta</span> <span class="o">=&gt;</span> <span class="s1">&#39;ex-5.fa&#39;</span><span class="p">)</span>
+<span class="c1"># Open the file</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">open</span>
+
+<span class="c1"># Process region chr1:114915-114925 by column (pileup)</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">mpileup</span><span class="p">({</span><span class="ss">:r</span> <span class="o">=&gt;</span> <span class="s2">&quot;chr1:114915-114925&quot;</span><span class="p">})</span> <span class="k">do</span> <span class="o">|</span><span class="n">pileup</span><span class="o">|</span>
+    <span class="c1"># &#39;pileup&#39; is a Bio::DB:Pileup object</span>
+    <span class="nb">puts</span> <span class="n">pileup</span>
+<span class="k">end</span>
+
+<span class="c1"># Close the file</span>
+<span class="n">bam</span><span class="o">.</span><span class="n">close</span>
+</pre></div>
+
+<p>File: <a href="../examples/ex-5a-bam-example.rb"><code>lab/examples/ex-5a-bam-example.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Sample application: SNP calling</h2></hgroup><article><p>An <em>SNP</em> is a variation/mutation of a single nucleotide.</p>
+<p>Example:</p>
+<pre><code>
+   Coor     12345678901234567890123456789
+   ref      AGCATGTTAGA<span style="color: black; font-weight:bold;">C</span>AAGATAGC<span style="color: black; font-weight:bold;">A</span>GTGCTAGT
+
+   Indiv_1  AGCATGTTAGA<span style="color: red; font-weight:bold;">T</span>AAGATAGC<span style="color: blue; font-weight:bold;">A</span>GTGCTAGT
+   Indiv_2  AGCATGTTAGA<span style="color: blue;font-weight:bold;">C</span>AAGATAGC<span style="color: red; font-weight:bold;">G</span>GTGCTAGT
+   Indiv_3  AGCATGTTAGA<span style="color: blue;font-weight:bold;">C</span>AAGATAGC<span style="color: red; font-weight:bold;">G</span>GAGCTAGT
+</code></pre></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 5b:</strong><br />
+Write a program that prints the <em>putative SNPs</em> given a BAM file containing the alignments of a set of sequences to a reference genomic sequence.<br />
+A putative SNP is a genomic location where non-reference nucleotides ("alleles") has been observed in at least one aligned sequence.<br />
+For each putative SNP, print the id of the reference sequence, the position, and the counts of reference and non-reference alleles (nucleotides).</p>
+<p><em>Question:</em> how you should read the BAM file? By-row or by-column?</p>
+<p>Prepare a simple program that extracts the putative SNPs given the reference FASTA file <a href="../examples/ex-5.fa"><code>ex-5.fa</code></a> and the BAM file <a href="../examples/ex-5.bam"><code>ex-5.bam</code></a></p>
+<p>File: <a href="../examples/ex-5b-snp-call.rb"><code>lab/examples/ex-5b-snp-call.rb</code></a></p>
+<!--  LocalWords:  BAM
+ --></article></slide><slide class="backdrop"></slide>
 </slides>
 
 <!--[if IE]>
