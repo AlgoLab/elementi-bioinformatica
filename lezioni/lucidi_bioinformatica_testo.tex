@@ -1607,26 +1607,188 @@ Smith-Waterman sulle regioni
 \end{block}
 \end{frame}
 
+
 \begin{comment}
 \begin{frame}[fragile]
 \frametitle{BWA-SW}
 \end{frame}
 \end{comment}
 
+
 \begin{frame}[fragile]
-\frametitle{SamTools}
+\frametitle{SamTools: sloccount}
+\begin{verbatim}
+SLOC  Directory	SLOC-by-Language (Sorted)
+14688 top_dir   ansic=14688
+5334  misc      perl=2777,ansic=2258,java=158,python=141
+4601  bcftools  ansic=4080,perl=521
+1527  win32     ansic=1527
+178   examples  ansic=178
+
+Totals grouped by language (dominant language first):
+ansic:        22731 (86.34%)
+perl:          3298 (12.53%)
+java:           158 (0.60%)
+python:         141 (0.54%)
+
+Development Effort Estimate, Person-Years = 6.20
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{SamTools: close file}
 \lstinputlisting{code/samtools/samclose.c}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{SamTools}
+\frametitle{SamTools: read file}
 \lstinputlisting{code/samtools/samread.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: write file}
+\lstinputlisting{code/samtools/samwrite.c}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{SamTools}
-\lstinputlisting{code/samtools/chk_indel.c}
+\frametitle{SamTools: read file}
+\lstinputlisting{code/samtools/samopen1.c}
 \end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: read file}
+\lstinputlisting{code/samtools/samopen2.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: read file}
+\lstinputlisting{code/samtools/samopen3.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: read file}
+\lstinputlisting{code/samtools/samopen4.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: read SAM file}
+\lstinputlisting{code/samtools/samopen5.c}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{SamTools: SAM header parse}
+\lstinputlisting{code/samtools/bam_import_sam_header_parse.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{SamTools: SAM header parse2}
+\lstinputlisting{code/samtools/sam_import_sam_header_parse2.c}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{SamTools: list append to end}
+\lstinputlisting{code/samtools/sam_header_list_append_to_end.c}
+
+Come è fatto \verb+list_t+?
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{SamTools: list append to end}
+\lstinputlisting{code/samtools/sam_header_HeaderList.c}
+\end{frame}
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{SamTools: calDepth.c}
+\lstinputlisting{code/samtools/calDepth.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: calDepth.c}
+\lstinputlisting{code/samtools/calDepth-main1.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: calDepth.c}
+\lstinputlisting{code/samtools/calDepth-main2.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: calDepth.c}
+\lstinputlisting{code/samtools/calDepth-main3.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{SamTools: bam parse region}
+\lstinputlisting{code/samtools/bam_parse_region.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bam parse region}
+\lstinputlisting{code/samtools/bam_parse_region-1.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bam parse region}
+\lstinputlisting{code/samtools/bam_parse_region-2.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bam parse region}
+\lstinputlisting{code/samtools/bam_parse_region-4.c}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-1.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-2.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-3.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-4.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-5.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-6.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-7.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-8.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-9.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-10.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-11.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-12.c}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{SamTools: bgzf}
+\lstinputlisting{code/samtools/bgzf-13.c}
+\end{frame}
+
+
 
 \begin{frame}[fragile]
 \frametitle{Filogenesi. Neighbor-Joining.}
