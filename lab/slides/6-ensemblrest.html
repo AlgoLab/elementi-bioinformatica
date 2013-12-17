@@ -43,17 +43,148 @@ Slides: <a href="http://algolab.github.io/elementi-bioinformatica/lab/slides/">h
 Materiale: <a href="https://github.com/algolab/elementi-bioinformatica">https://github.com/algolab/elementi-bioinformatica</a><br /></p>
 <p>&nbsp;<br />
 A.A. 2013/14 - C.d.L. in Informatica - Univ. di Milano-Bicocca</p></article></slide><slide >
-  <hgroup><h2>Elementi di Bioinformatica (Laboratorio)</h2></hgroup><article><p><strong>Contenuti:</strong></p>
-<ol>
-<li><a href="1-esercizi-Ruby.html">Esercizi Ruby - parte 1</a></li>
-<li><a href="2-esercizi-Ruby.html">Esercizi Ruby - parte 2</a></li>
-<li><a href="3-esercizi-Ruby.html">Esercizi Ruby - parte 3</a></li>
-<li><a href="4-esercizi-Ruby.html">Manipolazione formati file in Ruby (FASTA/GTF)</a></li>
-<li><a href="5-esercizi-Ruby.html">Manipolazione formati file in Ruby (SAM/BAM)</a></li>
-<li><a href="6-ensemblrest.html">Accesso alle API REST Ensembl</a></li>
-<li>Pipeline completa: estrazione dati, gestione dati</li>
-<li>Pipeline completa: allineamento, produzione output</li>
-</ol></article></slide><slide class="backdrop"></slide>
+  <hgroup><h1>Accessing to the Ensembl REST API</h1></hgroup></slide><slide >
+  <hgroup><h2>RESTful web services</h2></hgroup><article><p><strong>REST</strong> (REpresentational State Transfer):</p>
+<p>An architectural style for designing remote services that allow to access and <em>operate</em> on remote <em>resources</em>.</p>
+<p>Constraints:</p>
+<ul>
+<li>client-server</li>
+<li>stateless</li>
+<li>cacheable</li>
+<li>layered</li>
+<li>uniform interface (identification/manipulation/self-descriptive/hypermedia)</li>
+</ul></article></slide><slide >
+  <hgroup><h2>RESTful/GETful web services</h2></hgroup><article><p>HTTP is the usual protocol to access and manipulate the resources.</p>
+<p>HTTP operations:</p>
+<ul>
+<li>GET</li>
+<li>PUT</li>
+<li>DELETE</li>
+<li>POST</li>
+</ul>
+<p>"GETful" web services are "read-only" services (resources can be only read, not modified)</p></article></slide><slide >
+  <hgroup><h2>Ensembl REST API</h2></hgroup><article><p>An API for the programmatic access (read-only) to Ensembl resources developed in the REST-style.</p>
+<p>Currently in beta, it will eventually supersede the traditional Perl (!) API.</p>
+<p>It provides access to (not-exhaustive list):</p>
+<ul>
+<li>Sequences (genomic, cDNA, CDS, and protein)</li>
+<li>VEP (Variant Effect Predictor)</li>
+<li>Homologies</li>
+<li>Gene Trees</li>
+<li>Assembly and coordinate mapping</li>
+</ul>
+<p>It returns different representations/formats (JSON, XML, GFF3; ...) depending to the user preferences.</p></article></slide><slide >
+  <hgroup><h2>Ensembl REST API</h2></hgroup><article><p>Home: <a href="">http://beta.rest.ensembl.org/</a><br />
+User guide: <a href="">http://beta.rest.ensembl.org/documentation/user_guide</a><br />
+Endpoint documentation: <a href="">http://beta.rest.ensembl.org/</a></p>
+<p>Each functionality is represented by an "parametrized" URL called <strong>endpoint</strong>.</p>
+<p><strong>Required</strong> parameters (e.g., resource id):</p>
+<ul>
+<li>part of the "URL path"</li>
+<li>prefixed by <code>:</code> or enclosed by <code>{}</code> in the documentation</li>
+</ul>
+<p><strong>Optional</strong> parameters (e.g., output format):</p>
+<ul>
+<li>specified as query string/HTTP header</li>
+</ul></article></slide><slide >
+  <hgroup><h2>Simple example</h2></hgroup><article><p><strong>Example:</strong> Retrieve the nucleotide sequence of a specific genomic region.</p>
+<p><strong>Syntax:</strong> <code>GET /sequence/region/:species/:region</code></p>
+<p><strong>Query:</strong> <code>GET /sequence/region/human/X:1000000..1000100:1</code></p>
+<p><strong>Via console:</strong><br />
+<code>curl 'http://beta.rest.ensembl.org/sequence/region/human/X:1000000..1000100:1?' -H 'Content-type:text/x-fasta'</code></p>
+<p><strong>Output:</strong></p>
+<pre><code>&gt;chromosome:GRCh37:X:1000000:1000100:1
+GAAACAGCTACTTGGAAGGCTGAAGCAGGAGGATTGTTTGAGTCTAGGAGTTTGAGGCTG
+CAGTGAGTTATGAGCACACCACGGCACTCCAGCCTGGGAGA
+</code></pre></article></slide><slide >
+  <hgroup><h2>Notes</h2></hgroup><article><ul>
+<li>
+<p>Many functionalities are available: check the <a href="http://beta.rest.ensembl.org/">docs</a>!</p>
+</li>
+<li>
+<p>The service is in <strong>beta</strong>:<br />
+  Available for everyone, but...<br />
+  with a fair-usage limit (<strong>max 3 request per second</strong>)</p>
+</li>
+</ul></article></slide><slide >
+  <hgroup><h2>Fair usage example</h2></hgroup><article><p><strong>Command:</strong><br />
+<code>curl -v 'http://beta.rest.ensembl.org/sequence/region/human/X:1000000..1000100:1' -H 'Content-type:text/x-fasta'</code></p>
+<p><strong>Output:</strong></p>
+<pre><code>&gt; GET /sequence/region/human/X:1000000..1000100:1 HTTP/1.1
+...
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: text/x-fasta
+&lt; X-RateLimit-Limit: 11100
+&lt; X-RateLimit-Period: 3600
+&lt; X-RateLimit-Remaining: 11099
+&lt; X-RateLimit-Reset: 3050
+...
+</code></pre></article></slide><slide >
+  <hgroup><h2>How to programmatically access the Ensembl REST API from Ruby?</h2></hgroup><article><p class="larger center">There is a <strong>Ruby Gem</strong> (of course)!<br /></p>
+<table>
+<thead>
+<tr>
+<th>Gem:</th>
+<th><code>bio-ensembl-rest</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Author:</em></td>
+<td><a href="https://github.com/ALTree">Alberto Donizetti</a> (supervised by <a href="https://github.com/fstrozzi">Francesco Strozzi</a>)</td>
+</tr>
+<tr>
+<td><em>Homepage:</em></td>
+<td><a href="">https://github.com/ALTree/bio-ensembl-rest</a></td>
+</tr>
+<tr>
+<td><em>Usage:</em></td>
+<td><a href="">https://github.com/ALTree/bio-ensembl-rest/wiki</a></td>
+</tr>
+</tbody>
+</table></article></slide><slide class="has_code">
+  <hgroup><h2><code>bio-ensembl-rest</code></h2></hgroup><article><p><code>bio-ensembl-rest</code> maps each (logical) <em>group of endpoints</em> into a <em>Ruby module</em> whose <em>methods</em> are the <em>endpoints</em> available for the group.</p>
+<p>API parameters are mapped to the method parameters, while errors are converted to Ruby exceptions.</p>
+<p>The list of methods is available <a href="https://github.com/ALTree/bio-ensembl-rest/wiki/modules-and-methods-list">here</a></p>
+<p><em>Installation?</em> It is a public gem!</p>
+<div class="highlight"><pre>gem install bio-ensembl-rest
+</pre></div>
+</article></slide><slide class="has_code">
+  <hgroup><h2><code>bio-ensembl-rest</code> - Example</h2></hgroup><article><div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;bio-ensembl-rest&#39;</span>
+<span class="kp">include</span> <span class="no">EnsemblRest</span>
+
+<span class="no">EnsemblRest</span><span class="o">.</span><span class="n">connect_db</span> <span class="c1"># connect to database</span>
+<span class="nb">puts</span> <span class="no">Sequence</span><span class="o">.</span><span class="n">sequence_region</span> <span class="s1">&#39;Homo sapiens&#39;</span><span class="p">,</span> <span class="s1">&#39;X:1000000..1000100:1&#39;</span>
+<span class="c1"># =&gt; GAAACAGCTACTTGGAAGGCTGAAGCAGGAGGATTGTTTGAGTCTAGGAGTTTGAGGCTG</span>
+<span class="c1">#    CAGTGAGTTATGAGCACACCACGGCACTCCAGCCTGGGAGA</span>
+
+<span class="nb">puts</span> <span class="no">Sequence</span><span class="o">.</span><span class="n">sequence_region</span> <span class="s1">&#39;Homo sapiens&#39;</span><span class="p">,</span> <span class="s1">&#39;X:1000000..1000100:1&#39;</span><span class="p">,</span> <span class="ss">response</span><span class="p">:</span> <span class="s1">&#39;fasta&#39;</span>
+<span class="c1"># =&gt; &gt;chromosome:GRCh37:X:1000000:1000100:1</span>
+<span class="c1">#    GAAACAGCTACTTGGAAGGCTGAAGCAGGAGGATTGTTTGAGTCTAGGAGTTTGAGGCTG</span>
+<span class="c1">#    CAGTGAGTTATGAGCACACCACGGCACTCCAGCCTGGGAGA</span>
+</pre></div>
+</article></slide><slide >
+  <hgroup><h2>Example</h2></hgroup><article><p><strong>Problem 6a:</strong><br />
+The reference sequence of exercises <em>5a</em> and <em>5b</em> corresponds to the genomic region located on the positive strand of chromosome 1 from coordinate 151050001 to 151250000 (inclusive, 1-based).</p>
+<p>Write a simple script that checks that the sequence with id <code>chr1</code> contained into the file <a href="ex-5-fa"><code>ex-5.fa</code></a> is equal to the above genomic region.</p>
+<p>File: <a href="../examples/ex-6a-ensembl-rest-example.rb"><code>lab/examples/ex-6a-ensembl-rest-example.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 6b:</strong><br />
+Write a script that retrieves and prints the list of genes contained in the previous genomic region.<br />
+In particular, for each gene the script should print: the Ensembl ID, the external name, the chromosome, the starting and ending coordinates, and the strand.</p>
+<p><strong>Remark:</strong> a gene is considered as a <em>feature</em> of a genomic region.</p>
+<p><strong>Hint:</strong> with the optional parameter <code>response: 'ruby'</code> the API method returns an array of hashes.</p>
+<p>File: <a href="../examples/ex-6b-ensembl-rest-genes.rb"><code>lab/examples/ex-6b-ensembl-rest-genes.rb</code></a></p></article></slide><slide >
+  <hgroup><h2>Exercise</h2></hgroup><article><p><strong>Problem 6c:</strong><br />
+It is commonly believed that the most important SNPs are those located in a coding region of a transcript (i.e., exon) since they could change the resulting protein.</p>
+<p>Add to the output of the program of the exercise <em>5b</em> the list of the identifiers of <em>exons</em> (if any) where each putative SNP is located.</p>
+<p>Are some of the putative SNPs located inside an annotated exon?</p>
+<p><strong>Remark:</strong> there is a feature representing an exon.</p>
+<p>File: <a href="../examples/ex-6c-snp-call-with-exons.rb"><code>lab/examples/ex-6c-snp-call-with-exons.rb</code></a></p>
+<!--  LocalWords:  Ensembl API GETful RESTful REpresentational cacheable
+ -->
+
+<!--  LocalWords:  LocalWords programmatically
+ --></article></slide><slide class="backdrop"></slide>
 </slides>
 
 <!--[if IE]>
