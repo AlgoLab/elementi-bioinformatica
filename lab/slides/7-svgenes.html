@@ -146,9 +146,9 @@ Some excerpts from the complete code <a href="../examples/ex-7a-svgenes-demo.rb"
 </pre></div>
 
 <p>The resulting diagram is <a href="../examples/out-7a.svg"><code>out-7a.svg</code></a>.</p></article></slide><slide class="has_code">
-  <hgroup><h2><code>bio-svgenes</code> - Caveats</h2></hgroup><article><p><code>bio-svgenes</code> v0.4.0 has some minor bugs.</p>
-<p>While the authors fix them in the official distribution, we can apply some <em>"monkey patches"</em> to modify the code at runtime.</p>
-<p>The patches are available in the file <a href="../examples/ex-7-bio-svgenes-patches.rb"><code>ex-7-bio-svgenes-patches.rb</code></a> and can be applied at <em>runtime</em> by "requiring" the file as follows.</p>
+  <hgroup><h2><code>bio-svgenes</code> - Caveats</h2></hgroup><article><p><code>bio-svgenes</code> v0.4.1 has a minor bug in method <code>Bio::Graphics::Page#write</code>.</p>
+<p>While the authors fix it in the official distribution, we can apply a <em>"monkey patch"</em> to modify the code at runtime.</p>
+<p>The patch is available in the file <a href="../examples/ex-7-bio-svgenes-patches.rb"><code>ex-7-bio-svgenes-patches.rb</code></a> and can be applied at <em>runtime</em> by "requiring" the file as follows.</p>
 <div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;bio-svgenes&#39;</span>
 <span class="n">require_relative</span> <span class="s1">&#39;ex-7-bio-svgenes-patches&#39;</span>
 </pre></div>
