@@ -75,4 +75,4 @@ clean :
 	rm -f ./*.pdf ./figures/*.pdf && latexmk -c
 
 release: pdf vc.tex
-	$(foreach f,$(TARGETS), rsync -aq  $(f)  ~/Documenti/Didattica/Bioinformatica/Materiale\ scaricabile/ && rsync -aq $(f) ~/Ubuntu\ One/Public/didattica/;)
+	$(foreach f,$(TARGETS), ~/bin/dropbox_uploader.sh upload $(f) elementi-bioinformatica;)
