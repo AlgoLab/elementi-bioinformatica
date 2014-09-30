@@ -126,7 +126,7 @@ $M(i,j)=1$ sse $P[:i]=T[j-i+1:j]$\\
 $0\le i\le m$, $0\le j\le n$
 \end{block}
 \begin{block}{Occorrenza di $P$ in $T$}
-$M(m,j)=1$
+$M(m,\cdot)=1$
 \end{block}
 \begin{itemize}
 \item
@@ -168,11 +168,11 @@ Right shift di $C[j-1]$
 \item
 $1$ in prima posizione
 \item
-AND con $U[T[j-1]]$
+AND con $U[T[j]]$
 \item
-\alert{w}: word size
+\alert{$\omega$}: word size
 \item
-C[j] = ((C[j-1] >> 1) || (1 << (w-1))) \& U[T[j]];
+$C[j] = \left( \left(C[j-1] >> 1 \right) \  ||\ \left(1 << (\omega -1) \right) \right)\ \&\  U[T[j]]$;
 \end{itemize}
 \end{block}
 \end{frame}
@@ -181,13 +181,13 @@ C[j] = ((C[j-1] >> 1) || (1 << (w-1))) \& U[T[j]];
 \frametitle{Note}
 \begin{itemize}
 \item
-Tempo $O(n)$ se $m\le w$
+Tempo $O(n)$ se $m\le \omega$
 \item
 Tempo $O(nm)$
 \item
 No condizioni
 \item
-$w<m\le 2w$?
+$\omega < m\le 2\omega$?
 \end{itemize}
 \end{frame}
 
@@ -279,7 +279,7 @@ Las Vegas:
 \item
 Sempre corretto
 \item
-Forse non in tempo polinomiale
+Forse non veloce
 \item
 Quicksort con pivot random
 \end{itemize}
@@ -287,7 +287,8 @@ Quicksort con pivot random
 Monte Carlo:
 \begin{itemize}
 \item
-Sempre tempo polinomiale
+Sempre veloce
+
 \item
 Forse non corretto
 \item
