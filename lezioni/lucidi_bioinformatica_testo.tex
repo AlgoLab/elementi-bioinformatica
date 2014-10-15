@@ -196,12 +196,12 @@ $\omega < m\le 2\omega$?
 \begin{block}{Alfabeto binario}
 \begin{itemize}
 \item
-$H(S)=\sum_{i=1}^{|S|} 2^{i-1}H[i]$
+$H(S)=\sum_{i=1}^{|S|} 2^{|S| - i}H(S[i])$
 \item
 sliding window di ampiezza $m$ su $T$
 \item
 $H(T[i+1:i+m]) =$\\
-$=\left(H(T[i:i+m-1]) - T[i] \right) / 2 + 2^{m-1}T[i+m-1]$
+$=\left(H(T[i:i+m-1]) - T[i] \right) / 2 + 2^{m-1}T[i+m]$
 \item
 operazioni su bit
 \item
