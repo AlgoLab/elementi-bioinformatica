@@ -7,3 +7,6 @@
 [submodule "samtools"]
 	path = samtools
 	url = https://github.com/samtools/samtools.git
+[submodule "readfq"]
+	path = readfq
+	url = git@github.com:bioinformatica-corso/readfq.git
