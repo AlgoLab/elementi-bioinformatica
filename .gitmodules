@@ -10,3 +10,6 @@
 [submodule "readfq"]
 	path = readfq
 	url = git@github.com:bioinformatica-corso/readfq.git
+[submodule "fastq-tools"]
+	path = fastq-tools
+	url = git@github.com:bioinformatica-corso/fastq-tools.git
